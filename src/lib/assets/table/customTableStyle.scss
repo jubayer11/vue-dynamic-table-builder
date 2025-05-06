@@ -1,0 +1,65 @@
+@use '@/assets/customColor.scss' as *;
+.table{
+  &__custom{
+    &__color{
+      &__primary{
+        color:$primary
+      }
+      &__secondary{
+        color: $secondary;
+      }
+      &__success{
+        color: $successDeep;
+      }
+      &__danger{
+        color: $google;
+      }
+      &__pending{
+        color: $orange;
+      }
+      &__cancel{
+        color: $cancel;
+      }
+    }
+    &__backgroundColor{
+      &__primary{
+        background-color:$primaryBackground
+      }
+      &__secondary{
+        background-color: $secondaryBackground;
+      }
+      &__success{
+        background-color: $successDeepBackground;
+      }
+      &__danger{
+        background-color: $googleBackground;
+      }
+      &__pending{
+        background-color: $orangeBackground;
+      }
+      &__cancel{
+        background-color: $cancelBackground;
+      }
+    }
+    &__fontWeight{
+      &__bold{
+        font-weight: bold;
+      }
+    }
+    &__flexCenter{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__statusButton{
+      padding: 0.2em 0.5em;
+      text-align: center;
+      border-radius: 5px;
+      max-width: fit-content;
+      min-width: 8em;
+    }
+  }
+}
+
+
+
