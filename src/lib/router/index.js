@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@demo/pages/index.vue'
+import View from "@demo/pages/view.vue";
+import AllFeatureActionView from "@demo/pages/AllFeatureActionView.vue";
 
 
 const routes = [
@@ -10,9 +12,14 @@ const routes = [
         component: Home
     },
     {
-        path: '/details/:id',
-        name: 'Details',
-        component: { template: '<div>Details for ID: {{ $route.params.id }}</div>' }
+        path: '/view/action',
+        name: 'ViewAction',
+        component:  View
+    },
+    {
+        path: '/view/all-feature/action',
+        name: 'ViewAllFeatureAction',
+        component:  AllFeatureActionView
     }
 ]
 

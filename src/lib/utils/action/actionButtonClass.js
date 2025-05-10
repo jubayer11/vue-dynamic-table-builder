@@ -40,9 +40,9 @@ export class ActionTypeButton {
     /**
      * Set both the behavior type and module for popUpOrRoute.
      * @param {number} isPopUpOrRoute - 0 for route, 1 for popup.
-     * @param {string} module - Route path or popup key.
+     * @param {string | null} module - Route path or popup key.
      */
-    updatePopUpOrRoute(isPopUpOrRoute, module) {
+    updatePopUpOrRoute(isPopUpOrRoute, module=null) {
         this.popUpOrRoute.isPopUpOrRoute = isPopUpOrRoute;
         this.popUpOrRoute.module = module;
     }
@@ -162,6 +162,34 @@ export class CancelOutlineButton extends ActionTypeButton {
             value,
             content,
             ...createButtonConfig('customTable__button__cancel__outline'),
+        });
+    }
+}
+
+/**
+ * SuccessNormal button with solid cancel style.
+ * @extends ActionTypeButton
+ */
+export class SuccessNormalButton extends ActionTypeButton {
+    constructor(value, content) {
+        super({
+            value,
+            content,
+            ...createButtonConfig('customTable__button__success__normal'),
+        });
+    }
+}
+
+/**
+ * SuccessOutline button with outlined cancel style.
+ * @extends ActionTypeButton
+ */
+export class SuccessOutlineButton extends ActionTypeButton {
+    constructor(value, content) {
+        super({
+            value,
+            content,
+            ...createButtonConfig('customTable__button__success__outline'),
         });
     }
 }

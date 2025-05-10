@@ -10,9 +10,9 @@
             v-if="isButtonAnimation"
             :class="[paginationStyles?.loadMore?.animation, customStyles?.loadMore?.animation]"
         />
-        <h4 :class="[paginationStyles?.loadMore?.content, customStyles?.loadMore?.content]">
+        <div :class="[paginationStyles?.loadMore?.content, customStyles?.loadMore?.content]">
           Load More
-        </h4>
+        </div>
       </div>
     </button>
   </div>

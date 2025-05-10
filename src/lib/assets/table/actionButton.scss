@@ -142,7 +142,7 @@
         border-radius: 5px;
         word-break: normal;
         overflow-wrap: normal;
-        cursor: pointer;
+        cursor: not-allowed;
       }
       &__outline{
         font-size: 1em;
@@ -154,7 +154,7 @@
         border-radius: 5px;
         word-break: normal;
         overflow-wrap: normal;
-        cursor: pointer;
+        cursor: not-allowed;
       }
     }
   }

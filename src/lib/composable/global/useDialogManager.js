@@ -23,7 +23,6 @@ export function openDialog(key) {
         [key]: true,
     };
     dialogValue.value = key;
-    console.log(dialogValue);
 }
 
 /**

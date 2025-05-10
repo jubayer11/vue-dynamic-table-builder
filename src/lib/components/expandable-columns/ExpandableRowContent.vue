@@ -30,7 +30,7 @@
       <slot
 
           name="expandableSpecificColumn"
-          v-bind="{item: rowData[n],rowIndex: n,id:rowData[myTable?.idIndex] }"
+          v-bind="{item: rowData[n],colIndex: n,id:rowData[myTable?.idIndex] }"
       />
 
       <!-- Multiple Column Slot -->

@@ -114,7 +114,7 @@ export class TableConfig {
          * @property {Object} pagination.data - Pagination metadata (total, current page, etc.)
          */
         this.pagination = {
-            isShow: true,
+            isShow: false,
             paginationType: 1,
             data: {},
         };
@@ -263,16 +263,39 @@ export class TableConfig {
         this.itemPerPage.value = value;
     }
 
+    /**
+     * Enables pagination display.
+     *
+     * This method sets the `isShow` flag to `true`, ensuring that
+     * pagination controls are visible in the table.
+     */
     updatePagination() {
-        this.pagination.isShow = false;
+        this.pagination.isShow = true;
     }
 
+    /**
+     * Sets the pagination type to "Load More" mode.
+     *
+     * This assigns a value of `2` to `pagination.paginationType`,
+     * which is interpreted by the table system as the "Load More" button style.
+     */
     updatePaginationLoadMore() {
         this.pagination.paginationType = 2;
     }
 
+    /**
+     * Sets the pagination type to "Numbered" mode.
+     *
+     * This assigns a value of `1` to `pagination.paginationType`,
+     * which renders standard numbered pagination controls.
+     */
+    updatePaginationNumber() {
+        this.pagination.paginationType = 1;
+    }
+
     /** @param {Object} value */
     updatePaginationData(value) {
+        this.pagination.isShow=true;
         this.pagination.data = value;
     }
 

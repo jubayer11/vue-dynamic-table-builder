@@ -177,6 +177,10 @@ const props = defineProps({
     type: Function,
     default: () => true,
   },
+  onSortingChange:{
+    type: Function,
+    default: () => true,
+  },
 });
 
 // Local state
@@ -189,6 +193,8 @@ const sortingIconClick = ref({});
 const expandIndex = ref(null);
 const isButtonAnimation = ref(false);
 const router=useRouter();
+let isAsc;
+
 
 // Lifecycle Hooks
 onBeforeMount(() => {
@@ -265,19 +271,34 @@ const isItemSelected=(id)=>{
   }
 }
 // Sorting handler
-function handleSortingChange(index) {
-  if (sortingIconClick.value[index]) {
-    sortingIconClick.value[index].path = [
-      sortingIconClick.value[index].path[1],
-      sortingIconClick.value[index].path[0],
-    ];
-  } else {
-    sortingIconClick.value = {};
-    sortingIconClick.value[index] = {
-      icon: styles.head.headThSortIcon.onClick.icon,
-      path: [styles.head.headThSortIcon.normal.path[0], styles.head.headThSortIcon.onClick.path],
-    };
+async function handleSortingChange(index) {
+
+
+  if (sortingIconClick.value[index]===undefined){
+    isAsc=false;
+
+  }else {
+    isAsc = !isAsc;
   }
+
+  const response = await props.onSortingChange(index, isAsc);
+
+
+  if (response){
+    if (sortingIconClick.value[index]) {
+      sortingIconClick.value[index].path = [
+        sortingIconClick.value[index].path[1],
+        sortingIconClick.value[index].path[0],
+      ];
+    } else {
+      sortingIconClick.value = {};
+      sortingIconClick.value[index] = {
+        icon: styles.head.headThSortIcon.onClick.icon,
+        path: [styles.head.headThSortIcon.normal.path[0], styles.head.headThSortIcon.onClick.path],
+      };
+    }
+  }
+
 }
 
 // Toggle row expansion
@@ -347,6 +368,7 @@ function updateStyles() {
 @use "@/assets/iconDefault.scss" as *;
 @use "@/assets/table/actionButton.scss" as *;
 @use "@/assets/table/userList.scss" as *;
+@use "@/assets/table/table-utilities.scss" as *;
 
 </style>
 <style scoped>

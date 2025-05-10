@@ -73,7 +73,8 @@
             v-if="isSpecificColumn(rowIndex)"
             name="specific-column"
             :item="item"
-            :rowIndex="rowIndex"
+            :colIndex="rowIndex"
+
             :id="data[myTable?.idIndex]"
         ></slot>
 

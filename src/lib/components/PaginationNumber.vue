@@ -87,3 +87,11 @@ const props = defineProps({
 });
 
 </script>
+<style scoped>
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+</style>

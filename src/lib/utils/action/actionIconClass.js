@@ -21,7 +21,7 @@ export class ActionTypeIcon {
     /**
      * Update a specific style class property.
      * @param {string} property - The property name to update.
-     * @param {string} newValue - The new class name.
+     * @param {string | array} newValue - The new class name.
      */
     updateStyleClasses(property, newValue) {
         this.styleClasses[property] = newValue;
@@ -30,9 +30,9 @@ export class ActionTypeIcon {
     /**
      * Update popup or route configuration.
      * @param {number} id - Identifier for popup or route.
-     * @param {string} module - Related module name.
+     * @param {null} module - Related module name.
      */
-    updatePopUpOrRoute(id, module) {
+    updatePopUpOrRoute(id, module=null) {
         this.popUpOrRoute.isPopUpOrRoute = id;
         this.popUpOrRoute.module = module;
     }
@@ -224,9 +224,54 @@ export class ListActionIcon extends StandardActionIcon {
 export class AddUserActionIcon extends StandardActionIcon {
     constructor(useWrapper = true) {
         super({
-            value: 19,
+            value: 8,
             content: 'add user',
             iconType: 'iconAddUser',
+            baseClass: 'table__action',
+            useWrapper,
+        });
+    }
+}
+export class LockedActionIcon extends StandardActionIcon {
+    constructor(useWrapper = true) {
+        super({
+            value: 9,
+            content: 'Locked',
+            iconType: 'iconLock',
+            baseClass: 'table__action',
+            useWrapper,
+        });
+    }
+}
+export class PresentActionIcon extends StandardActionIcon {
+    constructor(useWrapper = true) {
+        super({
+            value: 10,
+            content: 'active',
+            iconType: 'iconPresent',
+            baseClass: 'table__action',
+            useWrapper,
+        });
+    }
+}
+
+export class PlusActionIcon extends StandardActionIcon {
+    constructor(useWrapper = true) {
+        super({
+            value: 11,
+            content: 'invited',
+            iconType: 'iconPlus',
+            baseClass: 'table__action',
+            useWrapper,
+        });
+    }
+}
+export class MinusActionIcon extends StandardActionIcon {
+    constructor(useWrapper = true) {
+        super({
+            value: 12,
+            content: 'deactivated',
+            iconType: 'iconMinus',
             baseClass: 'table__action',
             useWrapper,
         });
