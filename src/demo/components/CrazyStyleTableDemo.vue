@@ -455,7 +455,7 @@ destroyIcon.updatePopUpOrRoute(popUpOrRoute.neither);
 
 viewIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--view');
 viewIcon.updateStyleClasses('icon', 'icon-svg');
-viewIcon.updateStyleClasses('path', ['icon-fill--success']);
+viewIcon.updateStyleClasses('path', ['icon-fill--success','icon-fill--success']);
 
 editIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--edit');
 editIcon.updateStyleClasses('icon', 'icon-svg');

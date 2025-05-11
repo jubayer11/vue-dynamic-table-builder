@@ -364,10 +364,6 @@ function updateStyles() {
 <style lang="scss">
 
 @use "@/assets/table/defaultTableCustomization.scss" as *;
-@use "@/assets/table/customTableStyle.scss" as *;
-@use "@/assets/iconDefault.scss" as *;
-@use "@/assets/table/actionButton.scss" as *;
-@use "@/assets/table/userList.scss" as *;
 @use "@/assets/table/table-utilities.scss" as *;
 
 </style>

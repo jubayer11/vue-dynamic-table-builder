@@ -1,6 +1,7 @@
 /* --------------------------------------------------
    Vue Dynamic Table Builder – Responsive + Dark Mode Utilities
 -------------------------------------------------- */
+@use '@/assets/customColor.scss' as *;
 
 .table-status {
   font-weight: 600;
@@ -227,5 +228,166 @@
 @media (min-width: 768px) {
   .table-placeholder {
     font-size: 1em;
+  }
+}
+
+.customTable{
+  &__button{
+    &__primary{
+      &__normal{
+        font-size: 1em;
+        background-color: $primary;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $primary;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $primary;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $primary;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+    }
+    &__secondary{
+      &__normal{
+        font-size: 1em;
+        background-color: $secondary;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $secondary;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $secondary;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $secondary;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+    }
+    &__orange{
+      &__normal{
+        font-size: 1em;
+        background-color: $deepOrange;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $deepOrange;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $deepOrange;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $deepOrange;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+    }
+    &__green{
+      &__normal{
+        font-size: 1em;
+        background-color: $success;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $successDeep;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $success;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $successDeep;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+    }
+    &__cancel{
+      &__normal{
+        font-size: 1em;
+        background-color: $google;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid #9b1004;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $google;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid #9b1004;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: pointer;
+      }
+    }
+    &__disable{
+      &__normal{
+        font-size: 1em;
+        background-color: $tableContentGray;
+        color: $primaryWhite;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $tableContentGray;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: not-allowed;
+      }
+      &__outline{
+        font-size: 1em;
+        background-color: $primaryWhite;
+        color: $tableContentGray;
+        padding: 0.1em 0.5em;
+        font-weight: 700;
+        border: 0.18em solid $tableContentGray;
+        border-radius: 5px;
+        word-break: normal;
+        overflow-wrap: normal;
+        cursor: not-allowed;
+      }
+    }
   }
 }

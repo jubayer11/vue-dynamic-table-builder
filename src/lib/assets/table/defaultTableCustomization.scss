@@ -572,53 +572,22 @@
 
   }
 
-
-.check{
-background-color: red!important;
+.icon__default__icon{
+  height: 1em;
+  width: 1em;
+}
+.icon__default__icon__path1{
+  fill: $secondary;
 }
 
-//.userList{
-//  &__specific{
-//    &__wrapper{
-//      width: 100%!important;
-//      display: flex!important;
-//      flex-direction: row!important;
-//      flex-wrap: nowrap!important;
-//      justify-content: center!important;
-//      align-items: center!important;
-//    }
-//    &__image{
-//        height: 3em!important;
-//        width: 3em!important;
-//        border-radius: 9999px!important;
-//        border: 2px solid #0049B7!important;
-//        margin-right: 0.6em!important;
-//    }
-//    &__first{
-//      width: 100%!important;
-//      text-align: left!important;
-//      font-size: 1.2em!important;
-//      font-weight: 700!important;
-//    }
-//    &__second{
-//      width: 100%!important;
-//      text-align: left!important;
-//      font-size: 0.9em!important;
-//    }
-//  }
-//
-//  &__sorting{
-//    &__up{
-//      fill: white!important;
-//    }
-//    &__upClick{
-//      fill: black!important;
-//    }
-//    &__down{
-//      fill: white!important;
-//    }
-//    &__downClick{
-//      fill: black!important;
-//    }
-//  }
-//}
+.icon__default__icon__path2{
+  fill: $secondary;
+}
+
+.icon__default__icon__stroke1{
+  stroke: $secondary;
+}
+.icon__default__icon__stroke1{
+  stroke: $secondary;
+}
+
