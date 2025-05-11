@@ -4,7 +4,7 @@
     <div class="section-heading">
       <h2 class="demo-title">📂 Expandable Rows with Rich Content</h2>
       <p class="demo-description">
-        Each row expands to show additional structured or styled data — perfect for nested details like <strong>user profiles</strong>, <strong>sub-items</strong>, or <strong>internal logs</strong>.
+        This demo highlights how each row can expand to reveal rich structured data — great for use cases like <strong>user profiles</strong>, <strong>sub-items</strong>, or <strong>internal logs</strong>. The layout is responsive, and you can dynamically test different column visibility using the controls below.
       </p>
     </div>
 
@@ -21,16 +21,16 @@
       </button>
     </div>
 
-
     <!-- Table Placeholder -->
-    <div class="table-placeholder">
-      <DynamicTable
-          :myTable="myTable"
-          :customStyle="tableCustomStyle"
-          style="width: 100%"
-      >
-
-      </DynamicTable>
+    <div class="table-placeholder scroll-wrapper">
+      <div class="scroll-inner">
+        <DynamicTable
+            :myTable="myTable"
+            :customStyle="tableCustomStyle"
+            class="expandable-table"
+            style="font-size: 0.95em"
+        />
+      </div>
     </div>
 
     <!-- Bottom Note -->
@@ -41,10 +41,22 @@
 </template>
 
 <script setup>
+/**
+ * @component ExpandableRowDemo
+ * @description
+ * A responsive demo showcasing the Vue Dynamic Table Builder with expandable rows.
+ * - Each row contains structured data, and expands to reveal extended content like notes or activities.
+ * - Uses `updateExpandColumnNormalDataIdIndex` to style fields inside expanded content.
+ * - Includes dynamic column visibility controls using `ResponsiveColumnConfig` and real-time buttons.
+ *
+ * 🔧 Ideal for: dashboards, nested data views, user detail previews, or system logs.
+ * 📱 Fully responsive and dark-mode supported.
+ */
+
+
 import { computed, reactive, ref } from 'vue';
 import DynamicTable from '@/components/index.vue';
 import { TableConfig, TableStyleConfig, ResponsiveColumnConfig } from '@';
-
 
 const items = ref([
   {
@@ -87,6 +99,7 @@ const items = ref([
     notes: 'Very collaborative in meetings.'
   }
 ]);
+
 const columnDisplayOptions = {
   xxsm: { label: 'XXSM', columns: 0 },
   xsm: { label: 'XSM', columns: 2 },
@@ -134,13 +147,10 @@ const arrayOfTableData = computed(() => {
   });
 });
 
-
 const updateColumnsByBreakpoint = (value) => {
-  const dataShow= new ResponsiveColumnConfig(value);
+  const dataShow = new ResponsiveColumnConfig(value);
   customTable.updateDataShow(dataShow);
 };
-
-
 
 const dataShow = new ResponsiveColumnConfig(6);
 customTable.updateHeaders(headers.value);
@@ -156,6 +166,10 @@ const tableCustomStyle = computed(() => customStyle);
 </script>
 
 <style scoped>
+/* --------------------------------------------------
+   Expandable Row Demo – Responsive + Themed Styling
+-------------------------------------------------- */
+
 .demo-wrapper {
   background: linear-gradient(135deg, #f8fafc, #ffffff);
   padding: 3rem 2rem;
@@ -164,22 +178,24 @@ const tableCustomStyle = computed(() => customStyle);
   max-width: 1000px;
   margin: 3rem auto;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .section-heading {
   text-align: center;
   margin-bottom: 2.5rem;
   animation: fadeInDown 0.5s ease;
+  padding: 0 1rem;
 }
 
 .demo-title {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #1d4ed8;
   background: linear-gradient(to right, #3b82f6, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
+  word-break: break-word;
 }
 
 .demo-description {
@@ -188,6 +204,7 @@ const tableCustomStyle = computed(() => customStyle);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
 }
 
 .breakpoint-controls {
@@ -214,14 +231,44 @@ const tableCustomStyle = computed(() => customStyle);
 }
 
 .table-placeholder {
-  min-height: 150px;
+  padding: 1em;
   border: 2px dashed #cbd5e1;
   border-radius: 1rem;
   background-color: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1em;
+  overflow-x: auto;
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.table-scroll-inner {
+  min-width: 600px;
+}
+@media (min-width: 401px) {
+  .table-scroll-inner {
+    min-width: 700px;
+  }
+}
+@media (min-width: 640px) {
+  .table-scroll-inner {
+    min-width: 800px;
+  }
+}
+@media (min-width: 768px) {
+  .table-scroll-inner {
+    min-width: 960px;
+  }
+}
+@media (min-width: 1024px) {
+  .table-scroll-inner {
+    min-width: 1024px;
+  }
+}
+
+.expandable-table {
+  font-size: 0.95em;
 }
 
 .expand-content {
@@ -239,25 +286,94 @@ const tableCustomStyle = computed(() => customStyle);
   margin-top: 2rem;
   color: #4b5563;
   font-size: 0.95rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
-/* Dark Mode Styles */
+/* 🌙 Dark Mode */
 .dark-mode .demo-wrapper {
   background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
   box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
 }
-
-.dark-mode .demo-description {
+.dark-mode .demo-description,
+.dark-mode .demo-note {
   color: #94a3b8;
 }
-
 .dark-mode .table-placeholder {
   background-color: #1f2937;
   border-color: #334155;
   color: #94a3b8;
 }
+.dark-mode .expand-content {
+  background-color: #111827;
+  color: #e5e7eb;
+}
 
-/* Animation */
+/* 📱 Responsive Font Scaling */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1rem;
+  }
+  .demo-description,
+  .demo-note {
+    font-size: 0.75rem;
+  }
+  .expandable-table {
+    font-size: 0.65em;
+  }
+}
+@media (min-width: 401px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+  .demo-title {
+    font-size: 1.25rem;
+  }
+  .demo-description,
+  .demo-note {
+    font-size: 0.85rem;
+  }
+  .expandable-table {
+    font-size: 0.75em;
+  }
+}
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .demo-title {
+    font-size: 1.5rem;
+  }
+  .demo-description,
+  .demo-note {
+    font-size: 0.95rem;
+  }
+  .expandable-table {
+    font-size: 0.85em;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .demo-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* 🌀 Animation */
 @keyframes fadeInDown {
   0% {
     opacity: 0;

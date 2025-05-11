@@ -1,33 +1,28 @@
 <template>
   <div class="view-user-wrapper">
     <div class="view-user">
-      <!-- Header -->
       <div class="demo-header">
         <h2 class="demo-title">👤 User Profile View</h2>
         <p class="demo-description">
-          This component displays full user information — perfect for read-only profile pages or detailed views in dashboards.
-          All data is currently mocked. In real applications, you can retrieve the user dynamically using route params, global state (Pinia/Vuex), or composables.
+          This page showcases a single user detail layout for read-only viewing.
+          In a real app, the data should be fetched from Pinia, Vuex, a composition function, or route params —
+          but here it’s hardcoded for demo purposes.
         </p>
       </div>
 
-      <!-- Main Content -->
       <h2>{{ user.name }} <span class="role">({{ user.role }})</span></h2>
       <ul>
         <li><strong>Status:</strong> {{ user.status }}</li>
-        <li><strong>Email:</strong> {{ user.email }}</li>
-        <li><strong>Phone:</strong> {{ user.phone }}</li>
-        <li><strong>Performance:</strong> {{ user.performance }}%</li>
-        <li><strong>Online:</strong> {{ user.online ? '✅ Online' : '❌ Offline' }}</li>
-        <li><strong>Notes:</strong> {{ user.notes || 'No notes available.' }}</li>
-        <li><strong>Tags:</strong> {{ user.tags?.join(', ') || 'None' }}</li>
+        <li><strong>Last Active:</strong> {{ user.lastActive }}</li>
+        <li><strong>Contact:</strong> {{ user.contact || '—' }}</li>
+        <li><strong>Description:</strong> {{ user.description || 'No description available.' }}</li>
       </ul>
-
       <button class="btn-back" @click="$router.back()">← Back</button>
 
-      <!-- Footer -->
       <div class="demo-footer">
         <p>
-          🧠 <strong>Note:</strong> Data in this example is static, but in real-world apps, fetch it via route parameters or shared state.
+          🧠 <strong>Note:</strong> This view is statically defined, but you can easily integrate dynamic sources
+          like global state (Pinia/Vuex), route params, or custom composables.
         </p>
       </div>
     </div>
@@ -36,27 +31,20 @@
 
 <script setup>
 /**
- * @component ViewUserExtended
+ * @component ViewUser
  * @description
- * This is a detailed user view showcasing full profile information.
- * Intended for demo purposes with hardcoded data.
- * 🔁 In production, connect this to:
- * - Vue Router params (e.g. /users/:id)
- * - Pinia/Vuex store (getUserById)
- * - Or a composable for modular fetch logic
+ * A simple read-only user view page displaying selected user details.
+ * In this demo, the user data is hardcoded. In real use cases, you'd likely fetch it
+ * using route parameters, global state (Pinia/Vuex), or composables.
  */
+
 const user = {
-  id: 1,
   name: 'Alice Johnson',
-  avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-  email: 'alice.j@example.com',
-  phone: '+8801711111111',
-  role: 'Frontend Developer',
-  status: 'active',
-  performance: 93,
-  notes: 'Works on design system and component library.',
-  online: true,
-  tags: ['Vue', 'Tailwind', 'Figma']
+  role: 'Admin',
+  status: 'locked',
+  lastActive: '2025-05-06 14:22',
+  contact: 'email',
+  description: 'Handles user permissions and system configurations.'
 };
 </script>
 
@@ -89,7 +77,7 @@ const user = {
 .demo-title {
   font-size: 1.5rem;
   font-weight: 800;
-  background: linear-gradient(to right, #0ea5e9, #6366f1);
+  background: linear-gradient(to right, #3b82f6, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
@@ -133,6 +121,7 @@ ul {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 .btn-back:hover {
   background-color: #2563eb;
 }
@@ -160,6 +149,7 @@ ul {
 .dark-mode .btn-back {
   background-color: #10b981;
 }
+
 .dark-mode .btn-back:hover {
   background-color: #059669;
 }
@@ -174,7 +164,7 @@ ul {
   color: #cbd5e1;
 }
 
-/* 📱 Minor Responsive Adjustment */
+/* 📱 Minor Responsive Tweak */
 @media (max-width: 480px) {
   .view-user {
     padding: 1.5rem 1.25rem;

@@ -36,6 +36,53 @@
 </template>
 
 <script setup>
+/**
+ * 🛠️ Multi Action Table Demo
+ *
+ * This demo showcases a dynamic table with multiple icon-based action columns (View, Edit, Delete),
+ * using the Vue Dynamic Table Builder system. The table also demonstrates dynamic styling of a status
+ * column based on row values.
+ *
+ * @component MultiActionTableDemo
+ *
+ * @description
+ * Key Features:
+ * - Multiple action icons (handled externally via `onActionClick`)
+ * - Conditional class assignment for status styling
+ * - Custom icon styles and hover behavior
+ * - Responsive layout with horizontal scroll for smaller screens
+ *
+ * @dependencies
+ * - TableConfig
+ * - TableStyleConfig
+ * - ResponsiveColumnConfig
+ * - ViewActionIcon, EditActionIcon, DestroyActionIcon
+ * - popUpOrRoute
+ * - IconInlineActivityType
+ *
+ * @computed {TableConfig} myTable - Reactive instance of table configuration.
+ * @computed {TableStyleConfig} tableCustomStyle - Reactive instance of style configuration.
+ *
+ * @function handleActionClick
+ * @param {object} item - The action button instance clicked (includes `value`, `label`, etc.)
+ * @param {number|string} id - Row ID for which the action was triggered.
+ * @param {number} index - Index of the row in the displayed table.
+ * @param {string} type - Type of action (unused here, but passed for interface consistency).
+ * @returns {Promise<boolean>} Always resolves `true` to signal completion of the external handler.
+ *
+ * @style .table-status--[status] - Adds dynamic class for coloring `Status` field (e.g., `--active`, `--pending`).
+ * @style .icon-wrapper--[type] - Styles for each action icon (view, edit, delete) with light backgrounds and hover states.
+ *
+ * @example
+ * // Inside your template
+ * <DynamicTable
+ *   :myTable="myTable"
+ *   :customStyle="tableCustomStyle"
+ *   :onActionClick="handleActionClick"
+ *   class="scrollable-table"
+ * />
+ */
+
 import { computed, reactive, ref } from 'vue';
 import DynamicTable from '@/components/index.vue';
 import {
@@ -82,15 +129,15 @@ destroyIcon.updatePopUpOrRoute(popUpOrRoute.neither);
 
 viewIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--view');
 viewIcon.updateStyleClasses('icon', 'icon-svg');
-viewIcon.updateStyleClasses('path', ['icon-fill--success']);
+viewIcon.updateStyleClasses('path', ['icon-fill--success','icon-fill--success']);
 
 editIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--edit');
 editIcon.updateStyleClasses('icon', 'icon-svg');
-editIcon.updateStyleClasses('path', ['icon-fill--warning']);
+editIcon.updateStyleClasses('path', ['icon-fill--warning','icon-fill--warning']);
 
 destroyIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--delete');
 destroyIcon.updateStyleClasses('icon', 'icon-svg');
-destroyIcon.updateStyleClasses('path', ['icon-fill--error']);
+destroyIcon.updateStyleClasses('path', ['icon-fill--error','icon-fill--error']);
 
 const dataShow = new ResponsiveColumnConfig(5);
 const actionActivityType = new IconInlineActivityType();
@@ -118,6 +165,10 @@ const handleActionClick = async (item, id, index, type) => {
 </script>
 
 <style scoped>
+/* --------------------------------------------------
+   Multi-Action Table Demo – Responsive + Dark Mode
+-------------------------------------------------- */
+
 .demo-wrapper {
   background: linear-gradient(135deg, #f8fafc, #ffffff);
   padding: 3rem 2rem;
@@ -131,17 +182,18 @@ const handleActionClick = async (item, id, index, type) => {
 .section-heading {
   text-align: center;
   margin-bottom: 2.5rem;
+  padding: 0 1rem;
   animation: fadeInDown 0.5s ease;
 }
 
 .demo-title {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #1d4ed8;
   background: linear-gradient(to right, #3b82f6, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
+  word-break: break-word;
 }
 
 .demo-description {
@@ -150,6 +202,7 @@ const handleActionClick = async (item, id, index, type) => {
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
 }
 
 .demo-list {
@@ -191,8 +244,12 @@ const handleActionClick = async (item, id, index, type) => {
   font-style: italic;
   color: #64748b;
   padding: 1em;
+  overflow-x: auto;
+  width: 100%;
+  font-size: 1em;
 }
 
+/* Dark Mode */
 .dark-mode .demo-wrapper {
   background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
   box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
@@ -221,6 +278,74 @@ const handleActionClick = async (item, id, index, type) => {
   color: #f3f4f6;
 }
 
+/* ✅ Responsive Breakpoints */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1.1rem;
+  }
+  .demo-description,
+  .demo-list {
+    font-size: 0.8rem;
+  }
+  .table-placeholder {
+    font-size: 0.65em;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+  .demo-title {
+    font-size: 1.25rem;
+  }
+  .demo-description,
+  .demo-list {
+    font-size: 0.9rem;
+  }
+  .table-placeholder {
+    font-size: 0.75em;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .demo-title {
+    font-size: 1.5rem;
+  }
+  .demo-description,
+  .demo-list {
+    font-size: 0.95rem;
+  }
+  .table-placeholder {
+    font-size: 0.85em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .demo-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* ✨ Animation */
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -231,4 +356,5 @@ const handleActionClick = async (item, id, index, type) => {
     transform: translateY(0);
   }
 }
+
 </style>

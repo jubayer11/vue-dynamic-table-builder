@@ -44,6 +44,38 @@
 </template>
 
 <script setup>
+/**
+ * @component PaginationModesDemo
+ * @description
+ * A Vue 3 component that showcases two pagination UX patterns for data tables:
+ * 1. Classic Numbered Pagination
+ * 2. "Load More" Button (incremental loading)
+ *
+ * The table is powered by `DynamicTable` and `TableConfig`, with responsive breakpoints,
+ * themed design, and dark mode support. Users can switch between pagination styles using a toggle UI.
+ *
+ * Features:
+ * - Responsive layout and adaptive font sizing
+ * - Full dark mode compatibility
+ * - Pagination data updates via reactive watch
+ * - Dynamic control over number of items displayed
+ * - Custom table style via `TableStyleConfig`
+ * - Simulated backend pagination with `page`, `perPage`, and `meta` data
+ *
+ * Props (to DynamicTable):
+ * - myTable: reactive table configuration
+ * - customStyle: scoped table styling configuration
+ * - onPaginate: handles pagination or load-more interaction
+ *
+ * @dependencies
+ * - DynamicTable (local component)
+ * - TableConfig, TableStyleConfig, ResponsiveColumnConfig (from '@')
+ *
+ * @author
+ * Jubayer Ahmed
+ */
+
+
 import {computed, reactive, ref, watch} from 'vue'
 import DynamicTable from '@/components/index.vue';
 import {
@@ -176,6 +208,10 @@ const tableCustomStyle = computed(() => customStyle);
 </script>
 
 <style scoped>
+/* --------------------------------------------------
+   Pagination Modes Demo – Responsive + Themed
+-------------------------------------------------- */
+
 .demo-wrapper {
   background: linear-gradient(135deg, #f0fdf4, #ecfeff);
   padding: 3rem 2rem;
@@ -183,12 +219,14 @@ const tableCustomStyle = computed(() => customStyle);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
   max-width: 1000px;
   margin: 3rem auto;
+  transition: all 0.3s ease;
 }
 
 .section-heading {
   text-align: center;
   margin-bottom: 2rem;
   animation: fadeInDown 0.5s ease;
+  padding: 0 1rem;
 }
 
 .demo-title {
@@ -198,6 +236,7 @@ const tableCustomStyle = computed(() => customStyle);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
+  word-break: break-word;
 }
 
 .demo-description {
@@ -206,16 +245,8 @@ const tableCustomStyle = computed(() => customStyle);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
   text-align: center;
-}
-
-.table-placeholder {
-  min-height: 150px;
-  border: 2px dashed #93c5fd;
-  border-radius: 1rem;
-  background-color: #eff6ff;
-  padding: 1em;
-  margin-top: 1.5rem;
 }
 
 .mode-toggle {
@@ -223,6 +254,7 @@ const tableCustomStyle = computed(() => customStyle);
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .mode-toggle button {
@@ -241,11 +273,133 @@ const tableCustomStyle = computed(() => customStyle);
   border-color: #2563eb;
 }
 
+.table-placeholder {
+  min-height: 150px;
+  border: 2px dashed #93c5fd;
+  border-radius: 1rem;
+  background-color: #eff6ff;
+  padding: 1em;
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
 .demo-footer-description {
   text-align: center;
   color: #64748b;
   font-size: 0.95rem;
   margin-top: 2rem;
   font-style: italic;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
+
+/* 🌙 Dark Mode Support */
+.dark-mode .demo-wrapper {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .demo-description,
+.dark-mode .demo-footer-description {
+  color: #cbd5e1;
+}
+
+.dark-mode .table-placeholder {
+  background-color: #1e2937;
+  border-color: #334155;
+}
+
+.dark-mode .mode-toggle button {
+  background-color: #334155;
+  color: #e0f2fe;
+  border-color: #475569;
+}
+
+.dark-mode .mode-toggle button.active {
+  background-color: #6366f1;
+  color: white;
+  border-color: #818cf8;
+}
+
+/* 🔁 Responsive Breakpoints */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1.2rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.75rem;
+  }
+  .table-placeholder {
+    font-size: 0.65em;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+  .demo-title {
+    font-size: 1.4rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.85rem;
+  }
+  .table-placeholder {
+    font-size: 0.75em;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .demo-title {
+    font-size: 1.6rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.95rem;
+  }
+  .table-placeholder {
+    font-size: 0.85em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .demo-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* ✨ Animation */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>

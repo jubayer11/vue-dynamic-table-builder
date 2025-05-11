@@ -227,8 +227,12 @@ onBeforeUnmount(() => {
 })
 </script>
 
-
 <style scoped>
+/* --------------------------------------------------
+   Vue Dynamic Table Builder – Responsive Styling
+   Based on Tailwind CSS Breakpoints (incl. 0–400px)
+-------------------------------------------------- */
+
 .table-demo__wrapper {
   font-size: 14px;
   padding: 2rem 1rem;
@@ -314,7 +318,6 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-/* Navigation Grid */
 .table-demo__gridNavContainer {
   padding: 1rem;
   margin-bottom: 2.5rem;
@@ -350,7 +353,6 @@ onBeforeUnmount(() => {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Sections */
 .table-demo__sections {
   display: flex;
   flex-direction: column;
@@ -377,16 +379,14 @@ onBeforeUnmount(() => {
   line-height: 1.6;
 }
 
-/* 🔦 Dark Mode */
+/* Dark Mode */
 .dark-mode .table-demo__wrapper {
   background: linear-gradient(to bottom right, #121212, #1a1a1a);
 }
-
 .dark-mode .table-demo__headerCard {
   background-color: #1e1e1e;
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
-
 .dark-mode .table-demo__titleMain {
   color: #f3f4f6;
 }
@@ -408,6 +408,11 @@ onBeforeUnmount(() => {
   color: #cbd5e1;
   border-color: #3f3f46;
 }
+.dark-mode .table-demo__gridNav__item:hover {
+  background-color: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.2);
+  color: white;
+}
 .dark-mode .table-demo__gridNav__item.active {
   background-color: #6366f1;
   color: white;
@@ -424,21 +429,89 @@ onBeforeUnmount(() => {
   color: #9ca3af;
 }
 
-/* 📱 Mobile Adjustments */
-@media (max-width: 480px) {
+/* Responsive Breakpoints with 0–400px Segment */
+@media (max-width: 400px) {
+  .table-demo__wrapper {
+    padding: 1rem 0.5rem;
+  }
   .table-demo__titleMain {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
   .table-demo__description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+  .table-demo__gridNav__item {
+    font-size: 0.75rem;
+  }
+  .table-demo__sectionBlock {
+    padding: 1rem;
+    font-size: 0.8em;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 639px) {
+  .table-demo__wrapper {
+    padding: 1.25rem 0.5rem;
+  }
+  .table-demo__headerCard {
+    padding: 1.5rem 1rem;
+  }
+  .table-demo__gridNavContainer {
+    padding: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .table-demo__gridNav {
+    gap: 0.75rem;
+  }
+  .table-demo__gridNav__item {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    min-height: auto;
+    line-height: 1.3;
   }
   .table-demo__sectionBlock {
     padding: 1.25rem;
+    font-size: 0.9em;
   }
-  .table-demo__gridNav__item {
+  .table-demo__sectionTitle {
+    font-size: 1.25rem;
+  }
+  .table-demo__sectionDescription {
+    font-size: 0.95rem;
+  }
+  .github-badge,
+  .theme-toggle {
     font-size: 0.85rem;
-    padding: 0.6rem;
-    min-height: 58px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .table-demo__wrapper {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .table-demo__wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .table-demo__wrapper {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .table-demo__wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .table-demo__wrapper {
+    padding: 3rem 2.5rem;
   }
 }
 </style>
@@ -472,6 +545,10 @@ html {
   color: white !important;
 }
 .dark-mode .table__itemPerPage__field {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+.dark-mode .table__expandColumn__td{
   background-color: #1e1e1e !important;
   color: white !important;
 }

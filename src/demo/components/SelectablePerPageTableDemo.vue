@@ -57,6 +57,40 @@
 </template>
 
 <script setup>
+
+/**
+ * @component SelectablePerPageTableDemo
+ *
+ * A feature-rich data table demo using the Vue Dynamic Table Builder.
+ * Demonstrates selectable rows with checkboxes, serial numbers, pagination,
+ * custom per-page item selection, sortable headers, and a reactive preview dialog.
+ *
+ * Features:
+ * - Paginated data with mock entries.
+ * - Dynamically sortable columns: name, department, score.
+ * - Checkbox-based selection with computed `selectedItems`.
+ * - Serial number support.
+ * - Adjustable per-page values with live re-rendering.
+ * - Preview dialog showing currently selected rows.
+ * - Full dark mode compatibility.
+ *
+ * Behavior:
+ * - Pagination and per-page changes slice the data array (`allItems`) in real-time.
+ * - `handleSortingChange()` handles asc/desc logic based on column index.
+ * - `handleSelectItemChange()` triggers internal checkbox state updates.
+ * - Exposes `removeAllSelected()` via `defineExpose()` for parent control.
+ *
+ * Style Strategy:
+ * - Responsive, styled layout using linear gradients and clean table visuals.
+ * - `.table-placeholder` uses `em`-based scaling to control internal table sizing.
+ * - Tailwind-style theming for buttons, dialog, and footer description.
+ *
+ * Dependencies:
+ * - DynamicTable component (internal em-based responsiveness)
+ * - TableConfig, TableStyleConfig, ResponsiveColumnConfig
+ */
+
+
 import {computed, reactive, ref, watch} from 'vue'
 import {ResponsiveColumnConfig, TableConfig, TableStyleConfig} from "@";
 import DynamicTable from '@/components/index.vue';
@@ -223,12 +257,12 @@ const handlePagination = async (currentPage) => {
 const handleSelectItemChange=async (id,index,isChecked)=>{
 
   customTable.updateCheckBox(id,index,isChecked);
-  console.log('checking',customTable.selectedItem.ids);
+
 
 }
 const removeAllSelected=()=>{
   customTable.updateAllDeselect();
-  console.log('I am hit');
+
 }
 defineExpose({
   removeAllSelected,
@@ -237,6 +271,7 @@ defineExpose({
 </script>
 
 <style scoped>
+/* 🌐 Layout Wrapper */
 .demo-wrapper {
   background: linear-gradient(135deg, #f8fafc, #ffffff);
   padding: 3rem 2rem;
@@ -245,8 +280,10 @@ defineExpose({
   max-width: 1000px;
   margin: 3rem auto;
   transition: all 0.3s ease;
+  position: relative;
 }
 
+/* ✨ Section Header */
 .section-heading {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -268,6 +305,7 @@ defineExpose({
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
 }
 
 .demo-footer-description {
@@ -278,6 +316,7 @@ defineExpose({
   font-style: italic;
 }
 
+/* 📦 Table Container */
 .table-placeholder {
   min-height: 150px;
   border: 2px dashed #60a5fa;
@@ -289,8 +328,12 @@ defineExpose({
   font-style: italic;
   color: #2563eb;
   padding: 1em;
+  overflow-x: auto;
+  font-size: 1em;
+
 }
 
+/* 🧰 Action Button */
 .action-buttons {
   text-align: center;
   margin: 2rem 0 1rem;
@@ -312,17 +355,23 @@ defineExpose({
   cursor: not-allowed;
 }
 
+/* 📋 Dialog for Selection */
 .selected-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: white;
   border: 2px solid #d1d5db;
   border-radius: 12px;
   padding: 1.5em 2em;
   width: 400px;
   max-width: 90%;
-  margin: 2rem auto;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   color: #111827;
+  z-index: 1000;
 }
+
 
 .selected-dialog h3 {
   margin-bottom: 1em;
@@ -354,7 +403,7 @@ defineExpose({
   cursor: pointer;
 }
 
-/* Dark Mode Styles */
+/* 🌙 Dark Mode */
 .dark-mode .demo-wrapper {
   background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
   box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
@@ -370,7 +419,93 @@ defineExpose({
   border-color: #0ea5e9;
   color: #67e8f9;
 }
+.dark-mode .selected-dialog {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+  box-shadow: 0 20px 50px rgba(255, 255, 255, 0.05);
+}
+/* 📱 Responsive Breakpoints (Tailwind style) */
 
+/* xs: ≤400px */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1rem 0.5rem;
+  }
+
+  .demo-title {
+    font-size: 1.2rem;
+  }
+
+  .demo-description {
+    font-size: 0.8rem;
+  }
+
+  .table-placeholder {
+    font-size: 0.68em;
+  }
+}
+
+/* sm: 401px–639px */
+@media (min-width: 401px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .demo-title {
+    font-size: 1.4rem;
+  }
+
+  .demo-description {
+    font-size: 0.9rem;
+  }
+
+  .table-placeholder {
+    font-size: 0.78em;
+  }
+}
+
+/* md: 640px–767px */
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .demo-title {
+    font-size: 1.5rem;
+  }
+
+  .demo-description {
+    font-size: 0.95rem;
+  }
+
+  .table-placeholder {
+    font-size: 0.85em;
+  }
+}
+
+/* lg: 768px–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* xl: 1024px–1279px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .demo-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* 2xl: ≥1280px */
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* 🎬 Animation */
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -381,4 +516,5 @@ defineExpose({
     transform: translateY(0);
   }
 }
+
 </style>

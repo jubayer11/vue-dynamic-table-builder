@@ -26,7 +26,34 @@
   </div>
 </template>
 
+
+
+
 <script setup>
+/**
+ * @component BasicTableDemo
+ *
+ * Displays a minimal, elegant table example using the Vue Dynamic Table Builder.
+ * Useful for showcasing a clean setup with basic features such as serial numbers,
+ * column headers, and responsive layout.
+ *
+ * Features:
+ * - Shows a static dataset of mock employees.
+ * - Demonstrates em-based responsive scaling inside `.table-placeholder`.
+ * - Highlights ease of integration and design flexibility.
+ * - Dark mode compatible.
+ *
+ * Dependencies:
+ * - DynamicTable component (uses em-based units for flexible scaling).
+ * - TableConfig, TableStyleConfig, ResponsiveColumnConfig utilities.
+ *
+ * Style Strategy:
+ * - Uses linear-gradient backgrounds and light box shadows.
+ * - Wrapper and table size respond to Tailwind-style breakpoints.
+ * - Padding and font scaling are adjusted per breakpoint to maintain readability.
+ * - `font-size` on `.table-placeholder` directly controls table scale.
+ */
+
 import {computed, reactive, ref} from 'vue'
 
 import DynamicTable  from "@/components/index.vue";
@@ -83,10 +110,12 @@ const tableCustomStyle=computed(()=>{
   transition: all 0.3s ease;
 }
 
+/* ✨ Section Header */
 .section-heading {
   text-align: center;
   margin-bottom: 2.5rem;
   animation: fadeInDown 0.5s ease;
+  padding: 0 1rem;
 }
 
 .demo-title {
@@ -97,6 +126,7 @@ const tableCustomStyle=computed(()=>{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
+  word-break: break-word;
 }
 
 .demo-description {
@@ -105,8 +135,10 @@ const tableCustomStyle=computed(()=>{
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
 }
 
+/* ⚙️ Table container */
 .table-placeholder {
   padding: 1em;
   min-height: 150px;
@@ -118,7 +150,12 @@ const tableCustomStyle=computed(()=>{
   justify-content: center;
   font-style: italic;
   color: #64748b;
+  overflow-x: auto;
+  width: 100%;
+  font-size: 1em;
 }
+
+/* 🔢 Record Count */
 .results-count {
   text-align: right;
   font-size: 0.875rem;
@@ -126,6 +163,7 @@ const tableCustomStyle=computed(()=>{
   margin-bottom: 0.5rem;
 }
 
+/* ⚡ Footer credit */
 .powered-by {
   text-align: right;
   font-size: 0.875rem;
@@ -133,32 +171,99 @@ const tableCustomStyle=computed(()=>{
   margin-top: 1rem;
 }
 
-.dark-mode .powered-by {
-  color: #9ca3af;
-}
-
-.dark-mode .results-count {
-  color: #9ca3af;
-}
-
-
-/* Dark Mode Styles */
+/* 🌙 Dark Mode */
 .dark-mode .basic-table-wrapper {
   background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
   box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
 }
-
 .dark-mode .demo-description {
   color: #94a3b8;
 }
-
 .dark-mode .table-placeholder {
   background-color: #1f2937;
   border-color: #334155;
   color: #94a3b8;
 }
+.dark-mode .results-count,
+.dark-mode .powered-by {
+  color: #9ca3af;
+}
 
-/* Subtle animation */
+/* 📱 sm: ≤640px */
+@media (max-width: 400px) {
+  .basic-table-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1rem;
+  }
+  .demo-description {
+    font-size: 0.75rem;
+  }
+  .table-placeholder {
+    font-size: 0.65em;
+  }
+  .results-count,
+  .powered-by {
+    text-align: left;
+    padding: 0 0.25rem;
+  }
+}
+
+/* 📱 md: 640px–767px */
+@media (min-width: 400px) and (max-width: 639px) {
+  .basic-table-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1rem;
+  }
+  .demo-description {
+    font-size: 0.75rem;
+  }
+  .table-placeholder {
+    font-size: 0.65em;
+  }
+}
+
+/* 📱 md: 640px–767px */
+@media (min-width: 640px) and (max-width: 767px) {
+  .basic-table-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .demo-title {
+    font-size: 1.5rem;
+  }
+  .demo-description {
+    font-size: 0.95rem;
+  }
+  .table-placeholder {
+    font-size: 0.85em;
+  }
+}
+
+/* 📱 lg: 768px–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .basic-table-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* 📱 xl: 1024px–1279px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .basic-table-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* 📱 2xl: ≥1280px */
+@media (min-width: 1280px) {
+  .basic-table-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* 🎬 Animation */
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -170,3 +275,5 @@ const tableCustomStyle=computed(()=>{
   }
 }
 </style>
+
+

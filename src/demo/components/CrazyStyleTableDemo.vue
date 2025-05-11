@@ -8,7 +8,8 @@
       <button class="crazy-toggle" @click="toggleDark">🌗 Toggle Theme</button>
     </div>
 
-    <div class="crazy-table-container">
+    <div class="crazy-table-container ">
+      <div class="table-scroll-wrapper">
       <DynamicTable
           :myTable="myTable"
           :customStyle="customTableStyle"
@@ -49,7 +50,7 @@
         </template>
       </DynamicTable>
     </div>
-
+    </div>
     <p class="crazy-footer">
       This table demonstrates <strong>slot rendering</strong>, <strong>cell-level overrides</strong>, <strong>expandable section styling</strong>, and a <strong>dynamic theme</strong>. Total visual freedom! 🎨
     </p>
@@ -69,6 +70,43 @@ import {
 } from '@';
 import { popUpOrRoute} from "@/utils/customizableTable.js";
 import {IconInlineActivityType} from "@/utils/ActionActivityType.js";
+/**
+ * @component ExtremeCustomStyledTable
+ * @description
+ * A highly customizable Vue 3 component that demonstrates full visual and structural control
+ * of a dynamic table using the `DynamicTable` engine and `TableStyleConfig` styling system.
+ *
+ * This component showcases:
+ * - Deep custom styling for headers, cells, expandable sections, and pagination
+ * - Slot-based custom column rendering using `#specific-column` and `#expandable-specific-column`
+ * - Toggleable dark mode that dynamically adjusts classes and colors
+ * - Per-index, per-ID, and per-property styling through `TableStyleConfig`
+ * - Pagination control and reactive updates via `page` and `perPage`
+ * - Serial number display, multi-column support, and checkbox selection
+ *
+ * The table is styled using class maps injected via the `TableStyleConfig` API,
+ * supporting scalable design and easy theming.
+ *
+ * @features
+ * - 🎨 Fully controlled header/body/expand/action column styling
+ * - 🌙 Dark mode toggle support via `toggleDark()`
+ * - 🔁 Responsive layout with adaptive typography
+ * - 🔗 Action buttons using `ViewActionIcon`, `EditActionIcon`, and `DestroyActionIcon`
+ * - 🔍 Dynamic pagination and item selector integration
+ *
+ * @slots
+ * - `#specific-column` – renders custom content for visible columns
+ * - `#expandable-specific-column` – renders expanded row data
+ *
+ * @dependencies
+ * - DynamicTable (local component)
+ * - TableConfig, TableStyleConfig, ResponsiveColumnConfig
+ * - ViewActionIcon, EditActionIcon, DestroyActionIcon
+ * - IconInlineActivityType, popUpOrRoute (utility definitions)
+ *
+ * @author
+ * Jubayer Ahmed
+ */
 
 const isDark = ref(false);
 const toggleDark = () => {
@@ -748,38 +786,43 @@ defineExpose({
 </style>
 
 <style scoped>
+/* --------------------------------------------------
+   Extreme Table Demo – Responsive + Full Themed
+-------------------------------------------------- */
+
 .crazy-wrapper {
   padding: 2em;
   max-width: 1100px;
   margin: 0 auto;
+  transition: all 0.3s ease;
 }
+
 .crazy-header {
   text-align: center;
   margin-bottom: 2rem;
+  animation: fadeInDown 0.5s ease;
+  padding: 0 1rem;
 }
+
 .crazy-title {
   font-size: 1.8rem;
   font-weight: 800;
   background: linear-gradient(to right, #3b82f6, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
 }
+
 .crazy-description {
   font-size: 1.05rem;
   color: #4b5563;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  word-break: break-word;
 }
-.crazy-table-container {
-  padding: 1em;
-  border: 3px dashed #ec4899;
-  background-color: #fdf4ff;
-  border-radius: 1rem;
-}
-.crazy-footer {
-  text-align: center;
-  margin-top: 2rem;
-  color: #6b7280;
-  font-style: italic;
-}
+
 .crazy-toggle {
   background: #3b82f6;
   color: white;
@@ -788,5 +831,271 @@ defineExpose({
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
 }
+
+.crazy-toggle:hover {
+  background: #2563eb;
+}
+
+.crazy-table-container {
+  border: 3px dashed #ec4899;
+  background-color: #fdf4ff;
+  border-radius: 1rem;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.table-scroll-wrapper {
+  min-width: 800px;
+  font-size: 0.95em;
+}
+
+/* 🎨 Slot-Based Column Styling */
+.cell-avatar-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.circle-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2px solid #8b5cf6;
+}
+.highlight-name {
+  font-weight: 700;
+  color: #1e2937;
+}
+.cell-dual-contact {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #374151;
+}
+.status-badge {
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.3em 0.8em;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+.status-badge.active {
+  background-color: #34d399;
+  color: white;
+}
+.status-badge.pending {
+  background-color: #facc15;
+  color: #1e2937;
+}
+.status-badge.on-leave {
+  background-color: #f87171;
+  color: white;
+}
+
+.expand-progress .bar-wrap {
+  background: #e2e8f0;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 1rem;
+  width: 10em;
+  margin-top: 0.25rem;
+}
+.expand-progress .bar-fill {
+  background: #8b5cf6;
+  color: white;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  height: 100%;
+}
+.expand-note {
+  font-style: italic;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+.expand-indicator {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.dot-online {
+  color: #22c55e;
+}
+.dot-offline {
+  color: #ef4444;
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 0.5rem;
+}
+.tag {
+  background: #c7d2fe;
+  color: #1e3a8a;
+  padding: 0.2em 0.6em;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.crazy-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* 🌙 Dark Mode */
+.dark-mode .crazy-wrapper {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+}
+.dark-mode .crazy-description,
+.dark-mode .crazy-footer {
+  color: #cbd5e1;
+}
+.dark-mode .crazy-table-container {
+  background-color: #1e293b;
+  border-color: #8b5cf6;
+}
+.dark-mode .crazy-toggle {
+  background-color: #10b981;
+}
+.dark-mode .crazy-toggle:hover {
+  background-color: #059669;
+}
+.dark-mode .highlight-name {
+  color: #f9fafb;
+}
+.dark-mode .cell-dual-contact {
+  color: #cbd5e1;
+}
+.dark-mode .status-badge {
+  background-color: #374151;
+  color: #f9fafb;
+}
+.dark-mode .status-badge.active {
+  background-color: #059669;
+}
+.dark-mode .status-badge.pending {
+  background-color: #ca8a04;
+}
+.dark-mode .status-badge.on-leave {
+  background-color: #dc2626;
+}
+.dark-mode .expand-note {
+  color: #94a3b8;
+}
+.dark-mode .expand-progress .bar-wrap {
+  background: #334155;
+}
+.dark-mode .bar-fill {
+  background: #6366f1;
+}
+.dark-mode .tag {
+  background-color: #312e81;
+  color: #e0f2fe;
+}
+
+/* 📱 Responsive Typography & Table Font Scaling */
+@media (max-width: 400px) {
+  .crazy-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .crazy-title {
+    font-size: 1.2rem;
+  }
+  .crazy-description,
+  .crazy-footer {
+    font-size: 0.75rem;
+  }
+  .circle-avatar {
+    width: 28px;
+    height: 28px;
+  }
+  .highlight-name {
+    font-size: 0.85rem;
+  }
+  .cell-dual-contact,
+  .expand-note {
+    font-size: 0.8rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+  }
+  .table-scroll-wrapper {
+
+    font-size: 0.8em;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 639px) {
+  .crazy-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+  .crazy-title {
+    font-size: 1.4rem;
+  }
+  .crazy-description,
+  .crazy-footer {
+    font-size: 0.85rem;
+  }
+  .table-scroll-wrapper {
+    font-size: 0.85em;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .crazy-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .crazy-title {
+    font-size: 1.6rem;
+  }
+  .crazy-description,
+  .crazy-footer {
+    font-size: 0.95rem;
+  }
+  .table-scroll-wrapper {
+    font-size: 0.85em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .crazy-wrapper {
+    padding: 2rem 1.5rem;
+  }
+  .table-scroll-wrapper {
+    font-size: 1em;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .crazy-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .crazy-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* ✨ Animation */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>

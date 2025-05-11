@@ -5,7 +5,10 @@
       <h2 class="demo-title">🚀 All Features Combined (Showcase)</h2>
       <p class="demo-description">
         This advanced showcase demonstrates <strong>every major feature</strong> of the Vue Dynamic Table Builder — including numbered pagination and load more modes, per-page selector, column responsiveness, expandable rows, slot rendering, progress indicators, smart status, online badges, dialog popups, and tag previews.
-        Resize your window or use the column control below to see how column visibility adapts.
+
+      </p>
+      <p class="demo-description">
+        To see how column visibility adapts automatically, please select <strong>"Auto"</strong> below first — then try resizing your window. Or choose a fixed column count to simulate specific breakpoints manually.
       </p>
     </div>
 
@@ -15,8 +18,11 @@
       <button
           v-for="(bp, key) in columnDisplayOptions"
           :key="key"
-          @click="updateColumnsByBreakpoint(bp.columns)"
-          class="bp-button"
+          @click="() => {
+    updateColumnsByBreakpoint(bp.columns);
+    selectedBreakpoint = key;
+  }"
+          :class="['bp-button', { active: selectedBreakpoint === key }]"
       >
         {{ bp.label }} ({{ bp.columns }} cols)
       </button>
@@ -34,82 +40,92 @@
 
     <!-- Full Table Display -->
     <div class="table-placeholder">
-      <DynamicTable
-          :myTable="myTable"
-          :customStyle="customTableStyle"
-          :onActionClick="handleActionClick"
-          :onSelectItemChange="handleSelectItemChange"
-          :onSelectorChange="handleSelectorChange"
-          :onPaginate="handlePagination"
-          :onSortingChange="handleSortingChange"
-          style="width: 100%"
-      >
-        <!-- Slot: Main Table Cell Rendering -->
-        <template #specific-column="{ item, colIndex, id }">
-          <template v-if="colIndex === 0">
-            <div class="user-cell">
-              <img :src="item[1]" alt="avatar" class="user-avatar" />
-              <span class="user-name">{{ item[0] }}</span>
-            </div>
-          </template>
-          <template v-else-if="colIndex === 3">
-            <span :class="['status-badge', item.toLowerCase()]">{{ item }}</span>
-          </template>
-          <template v-else-if="colIndex === 4">
-            <div class="progress-bar">
-              <div class="progress-fill" :style="{ width: item }">
-                {{ item }}
+      <div class="dynamic-table-wrapper">
+        <DynamicTable
+            :myTable="myTable"
+            :customStyle="customTableStyle"
+            :onActionClick="handleActionClick"
+            :onSelectItemChange="handleSelectItemChange"
+            :onSelectorChange="handleSelectorChange"
+            :onPaginate="handlePagination"
+            :onSortingChange="handleSortingChange"
+            style="width: 100%"
+            class="dynamic-table"
+        >
+          <!-- Slot: Main Table Cell Rendering -->
+          <template #specific-column="{ item, colIndex, id }">
+            <template v-if="colIndex === 0">
+              <div class="user-cell">
+                <img :src="item[1]" alt="avatar" class="user-avatar" />
+                <span class="user-name">{{ item[0] }}</span>
               </div>
-            </div>
-          </template>
-          <template v-else-if="colIndex === 5">
-            <button class="expand-button" @click="showNoteDialog(item)">📝 View Note</button>
-          </template>
-          <template v-else-if="colIndex === 6">
-            <span :class="item ? 'online-dot' : 'offline-dot'">
-              {{ item ? 'Online' : 'Offline' }}
-            </span>
-          </template>
-          <template v-else-if="colIndex === 7">
-            <div class="tag-icon-wrapper" @click="toggleTagDialog(id)">
-              <IconList />
-              <div v-if="tagDialogId === id" class="tag-dialog">
-                <div class="caret-up"></div>
-                <ul class="tag-dialog-list">
-                  <li v-for="(tag, i) in item" :key="i" class="tag">{{ tag }}</li>
-                </ul>
-              </div>
-            </div>
-          </template>
-        </template>
-
-        <!-- Slot: Expandable Row Rendering -->
-        <template #expandable-specific-column="{ item, colIndex }">
-          <div class="expand-item">
-            <template v-if="colIndex === 3">
+            </template>
+            <template v-else-if="colIndex === 3">
               <span :class="['status-badge', item.toLowerCase()]">{{ item }}</span>
             </template>
             <template v-else-if="colIndex === 4">
               <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: item }">{{ item }}</div>
+                <div class="progress-fill" :style="{ width: item }">
+                  {{ item }}
+                </div>
               </div>
             </template>
             <template v-else-if="colIndex === 5">
-              <p class="expand-notes">{{ item }}</p>
+              <button class="expand-button" @click="showNoteDialog(item)">📝 View Note</button>
             </template>
             <template v-else-if="colIndex === 6">
+            <span :class="item ? 'online-dot' : 'offline-dot'">
+              {{ item ? 'Online' : 'Offline' }}
+            </span>
+            </template>
+            <template v-else-if="colIndex === 7">
+              <div class="tag-icon-wrapper" @click="toggleTagDialog(id)">
+                <IconList />
+                <div v-if="tagDialogId === id" class="tag-dialog">
+                  <div class="caret-up"></div>
+                  <ul class="tag-dialog-list">
+                    <li v-for="(tag, i) in item" :key="i" class="tag">{{ tag }}</li>
+                  </ul>
+                </div>
+              </div>
+            </template>
+          </template>
+
+          <!-- Slot: Expandable Row Rendering -->
+          <template #expandable-specific-column="{ item, colIndex }">
+            <template v-if="colIndex === 0">
+              <div class="user-cell">
+                <img :src="item[1]" alt="avatar" class="user-avatar" />
+                <span class="user-name">{{ item[0] }}</span>
+              </div>
+            </template>
+            <div class="expand-item">
+              <template v-if="colIndex === 3">
+                <span :class="['status-badge', item.toLowerCase()]">{{ item }}</span>
+              </template>
+              <template v-else-if="colIndex === 4">
+                <div class="progress-bar">
+                  <div class="progress-fill" :style="{ width: item }">{{ item }}</div>
+                </div>
+              </template>
+              <template v-else-if="colIndex === 5">
+                <p class="expand-notes">{{ item }}</p>
+              </template>
+              <template v-else-if="colIndex === 6">
               <span :class="item ? 'online-dot' : 'offline-dot'">
                 {{ item ? 'Online' : 'Offline' }}
               </span>
-            </template>
-            <template v-else-if="colIndex === 7">
-              <div class="tag-list">
-                <span v-for="(tag, i) in item" :key="i" class="tag">{{ tag }}</span>
-              </div>
-            </template>
-          </div>
-        </template>
-      </DynamicTable>
+              </template>
+              <template v-else-if="colIndex === 7">
+                <div class="tag-list">
+                  <span v-for="(tag, i) in item" :key="i" class="tag">{{ tag }}</span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </DynamicTable>
+      </div>
+
 
       <!-- All Dialogs -->
       <dialog v-if="dialogVisible" class="expand-dialog" open>
@@ -121,7 +137,7 @@
       </dialog>
 
       <AllFeatureActionDialog
-          class="expand-dialog"
+          class="expand-action-dialog"
           v-if="showDialog"
           :user="activeUser"
           @close="closeActionDialog"
@@ -176,11 +192,41 @@
   </div>
 </template>
 
-<!-- The rest of your <script setup> and <style scoped> remains unchanged -->
-
-
 
 <script setup>
+
+/**
+ * @component AllFeaturesCombinedTableDemo
+ * @description
+ * A comprehensive Vue 3 component demonstrating all major features of the Vue Dynamic Table Builder.
+ * It includes support for:
+ * - Numbered and Load More pagination modes
+ * - Per-page item selector
+ * - Responsive column visibility simulation
+ * - Slot-based rendering for advanced cell customization
+ * - Expandable rows with styled content
+ * - Icon-based actions (popup + route)
+ * - Dynamic dialogs for notes and tag previews
+ * - Full dark mode compatibility
+ * - Real-time selection tracking
+ * - External control simulation (column breakpoint buttons)
+ *
+ * @features
+ * - Uses `TableConfig`, `TableStyleConfig`, and `ResponsiveColumnConfig`
+ * - Fully responsive with gradient and animation support
+ * - Maintains a modular structure for dialogs and actions
+ *
+ * @dependencies
+ * - DynamicTable component (main table engine)
+ * - AllFeatureActionDialog for popup-based edit/confirm actions
+ * - IconList for tag dialog toggle
+ *
+ * @usage
+ * Import and mount the component as a showcase page or embed within your table documentation/demo app.
+ */
+
+
+
 import { computed, reactive, ref, watch } from 'vue';
 import DynamicTable from '@/components/index.vue';
 import IconList from '@/components/Icon/iconList.vue';
@@ -750,8 +796,10 @@ const selectedNote = ref('');
 const tagDialogId = ref(null);
 const showSelected = ref(false);
 const mode = ref('pagination');
+const selectedBreakpoint = ref('auto');
 
 const columnDisplayOptions = {
+  auto: { label: 'Auto', columns: -1 },
   xxsm: { label: 'XXSM', columns: 0 },
   xsm: { label: 'XSM', columns: 2 },
   xm:  { label: 'XM', columns: 4 },
@@ -759,9 +807,19 @@ const columnDisplayOptions = {
   md:  { label: 'MD', columns: 6 },
   lg:  { label: 'LG', columns: 8 },
   xl:  { label: 'XL', columns: 9 },
-  xxl: { label: 'XXL', columns: 9 }
+  xxl: { label: 'XXL', columns: 9 },
 };
 
+const autoBreakpointConfigure=()=>{
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.xxsm,0);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.xsm,2);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.xm,3);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.sm,4);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.md,6);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.lg,8);
+  dataShow.setColumnByBreakPointsArray(breakPointsValue.xl,9);
+  customTable.updateDataShow(dataShow);
+}
 // ─────────────────────────────────────────────
 // Table Configurations
 // ─────────────────────────────────────────────
@@ -793,20 +851,20 @@ destroyIcon.updatePopUpOrRoute(popUpOrRoute.popUp, 'confirmDialog');
 
 viewIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--view');
 viewIcon.updateStyleClasses('icon', 'icon-svg');
-viewIcon.updateStyleClasses('path', ['icon-fill--success']);
+viewIcon.updateStyleClasses('path', ['icon-fill--success','icon-fill--success']);
 
 editIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--edit');
 editIcon.updateStyleClasses('icon', 'icon-svg');
-editIcon.updateStyleClasses('path', ['icon-fill--warning']);
+editIcon.updateStyleClasses('path', ['icon-fill--warning','icon-fill--warning']);
 
 destroyIcon.updateStyleClasses('wrapper', 'icon-wrapper icon-wrapper--delete');
 destroyIcon.updateStyleClasses('icon', 'icon-svg');
-destroyIcon.updateStyleClasses('path', ['icon-fill--error']);
+destroyIcon.updateStyleClasses('path', ['icon-fill--error','icon-fill--error']);
 
 // Column Breakpoints
 dataShow.setColumnByBreakPointsArray(breakPointsValue.xxsm,0);
 dataShow.setColumnByBreakPointsArray(breakPointsValue.xsm,2);
-dataShow.setColumnByBreakPointsArray(breakPointsValue.xm,4);
+dataShow.setColumnByBreakPointsArray(breakPointsValue.xm,3);
 dataShow.setColumnByBreakPointsArray(breakPointsValue.sm,4);
 dataShow.setColumnByBreakPointsArray(breakPointsValue.md,6);
 dataShow.setColumnByBreakPointsArray(breakPointsValue.lg,8);
@@ -817,7 +875,7 @@ dataShow.setColumnByBreakPointsArray(breakPointsValue.xl,9);
 // Table Setup
 customTable.updateHeaders(headers.value);
 customTable.updateIdIndex(8);
-customTable.updateTotalColumn(8);
+customTable.updateTotalColumn(9);
 customTable.updateDataShow(dataShow);
 customTable.updateItemPerPage();
 customTable.updateItemPerPageValue(perPage.value);
@@ -923,8 +981,13 @@ const loadInitialData = () => {
 };
 
 const updateColumnsByBreakpoint = (value) => {
-  const config = new ResponsiveColumnConfig(value);
-  customTable.updateDataShow(config);
+  if (value===-1){
+    autoBreakpointConfigure();
+  }else{
+    const config = new ResponsiveColumnConfig(value);
+    customTable.updateDataShow(config);
+  }
+
 };
 
 const handleSelectorChange = async (newPerPage) => {
@@ -970,6 +1033,7 @@ const handleSortingChange = async (index, isAsc) => {
   items.value = allItems.value.slice(start, end);
   customTable.updateData(arrayOfTableData.value);
   customTable.updatePaginationData(pagination.value);
+  return true;
 };
 
 const handleSelectItemChange = async (id, index, isChecked) => {
@@ -1026,187 +1090,267 @@ watch(mode, () => {
 });
 </script>
 <style scoped>
-
-
-
-.breakpoint-controls {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* --------------------------------------
+   All Features Combined – Responsive Demo
+----------------------------------------- */
+code {
+  font-weight: 900;
 }
+
+.demo-wrapper {
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+  padding: 3em 2em;
+  border-radius: 1.5em;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+  max-width: 1100px;
+  margin: 3em auto;
+  transition: all 0.3s ease;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 2.5em;
+  padding: 0 1em;
+}
+
+.demo-title {
+  font-size: 1.9em;
+  font-weight: 800;
+  background: linear-gradient(to right, #14b8a6, #6366f1, #f43f5e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.8em;
+  word-break: break-word;
+}
+
+.demo-description,
+.demo-footer-description {
+  font-size: 1.05em;
+  color: #475569;
+  max-width: 740px;
+  margin: 1em auto 0;
+  text-align: center;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.breakpoint-controls,
+.mode-toggle,
+.below-action {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 1.5em 0;
+}
+
 .control-label {
   font-weight: 600;
-  margin-right: 0.5rem;
+  margin-right: 0.5em;
 }
-.bp-button {
-  margin: 0.25rem;
-  background-color: #e0e7ff;
-  color: #1e3a8a;
+
+.bp-button,
+.mode-toggle button,
+.btn-reset,
+.btn-show-selected {
   font-weight: 600;
-  padding: 0.4rem 0.8rem;
+  padding: 0.5em 1.2em;
+  border-radius: 0.5em;
   border: none;
-  border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 1em;
+}
+
+.bp-button {
+  background-color: #e0e7ff;
+  color: #1e3a8a;
 }
 .bp-button:hover {
   background-color: #c7d2fe;
 }
-
-
-.selected-dialog {
-  width: 90%;
-  max-width: 800px;
-  padding: 2rem;
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  color: #1f2937;
-  max-height: 25em;
-  overflow-y: scroll;
-}
-
-h3 {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 1.5rem;
-  color: #0f172a;
-}
-
-.empty-message {
-  text-align: center;
-  color: #64748b;
-  font-style: italic;
-}
-
-.user-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.user-card {
-  display: flex;
-  gap: 1.2rem;
-  padding: 1.2rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-  margin-bottom: 1rem;
-  background-color: #f9fafb;
-}
-
-.avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 9999px;
-  object-fit: cover;
-  border: 2px solid #6366f1;
-}
-
-.info h4 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #374151;
-}
-.role {
-  font-size: 0.9rem;
-  color: #6b7280;
-}
-.info p {
-  margin: 0.2em 0;
-  font-size: 0.95rem;
-}
-.tag {
-  display: inline-block;
-  background: #e0e7ff;
-  color: #4338ca;
-  padding: 0.2em 0.6em;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  margin-right: 0.3em;
-  margin-top: 0.2em;
-}
-
-.dialog-actions {
-  text-align: center;
-  margin-top: 1.5rem;
-}
-.btn-close {
-  padding: 0.6em 1.5em;
-  background-color: #ef4444;
+.bp-button.active {
+  background-color: rgba(149, 14, 239);
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.btn-close:hover {
-  background-color: #dc2626;
+  border-color: #2563eb;
 }
 
-/* 🌙 Dark Mode */
-.dark-mode .selected-dialog {
-  background-color: #1e293b;
-  color: #f9fafb;
+.mode-toggle button {
+  background-color: #e0f2fe;
+  border: 1px solid #60a5fa;
 }
-.dark-mode .user-card {
-  background-color: #334155;
-  border-color: #475569;
-}
-.dark-mode .btn-close {
-  background-color: #b91c1c;
-}
-.dark-mode .btn-close:hover {
-  background-color: #991b1b;
-}
-.dark-mode .tag {
-  background: #4f46e5;
-  color: #f9fafb;
+.mode-toggle button.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #2563eb;
 }
 
-.action-buttons {
-  text-align: center;
-  margin: 2rem 0 1rem;
-}
-
+.btn-reset,
 .btn-show-selected {
   background-color: #3b82f6;
   color: white;
-  padding: 0.5em 1em;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
 }
-
+.btn-reset:hover {
+  background-color: #2563eb;
+}
 .btn-show-selected:disabled {
   background-color: #cbd5e1;
   cursor: not-allowed;
 }
 
-.selected-dialog {
+/* Table Area */
+.table-placeholder {
+  border: 2px dashed #cbd5e1;
+  border-radius: 1em;
+  background-color: #f8fafc;
+  padding: 1em;
+  position: relative;
+  overflow-x: auto;
+}
+.dynamic-table-wrapper {
+  font-size: 1em;
+}
+
+/* User Cell */
+.user-cell,
+.expand-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.user-avatar {
+  width: 2em;
+  height: 2em;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.3em 0.8em;
+  border-radius: 8px;
+  font-size: 0.75em;
+  text-transform: capitalize;
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+.status-badge.active {
+  background-color: #34d399;
+  color: white;
+}
+.status-badge.pending {
+  background-color: #facc15;
+  color: #1e2937;
+}
+.status-badge.on-leave {
+  background-color: #f87171;
+  color: white;
+}
+
+/* Progress */
+.progress-bar {
+  background: #e2e8f0;
+  border-radius: 1em;
+  overflow: hidden;
+  height: 1em;
+  width: 10em;
+}
+.progress-fill {
+  background: #3b82f6;
+  color: white;
+  font-size: 0.75em;
+  line-height: 1em;
+  height: 100%;
+  text-align: center;
+}
+
+/* Tag Icon */
+.tag-icon-wrapper {
+
+  display: inline-block;
+  cursor: pointer;
+  color: #4f46e5;
+  padding: 0.5em 0.6em;
+  background-color: #e0e0e5;
+  border-radius: 999px;
+  position: relative;
+}
+.tag-icon-wrapper:hover .tag-icon {
+  color: #6366f1;
+}
+
+/* Dot Indicator */
+.online-dot::before,
+.offline-dot::before {
+  content: '●';
+  margin-right: 0.4em;
+}
+.online-dot::before {
+  color: #10b981;
+}
+.offline-dot::before {
+  color: #ef4444;
+}
+
+/* Expand Note */
+.expand-notes {
+  font-style: italic;
+  color: #475569;
+  background-color: #8ccae7;
+  padding: 0.3em;
+  border-radius: 10px;
+}
+.expand-button {
+  background-color: #4f46e5;
+  color: white;
+  padding: 0.4em 1em;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95em;
+}
+
+/* Dialogs */
+.selected-dialog,
+.expand-dialog {
   background: white;
   border: 2px solid #d1d5db;
   border-radius: 12px;
   padding: 1.5em 2em;
-  width: 400px;
   max-width: 90%;
-  margin: 2rem auto;
+  width: 30em;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   color: #111827;
-  position: fixed;
+  position: absolute;
   top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%); /* center horizontally and vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+.expand-action-dialog{
+  background: white;
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1.5em 2em;
+  max-width: 90%;
+  width: 30em;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  color: #111827;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 25em;
+  overflow-y: scroll;
 
-.selected-dialog h3 {
-  margin-bottom: 1em;
-  font-size: 1.25em;
-  text-align: center;
 }
-
+.selected-dialog{
+  height: 25em;
+  overflow-y: scroll;
+}
 .selected-dialog ul {
   list-style-type: none;
   padding: 0;
@@ -1216,125 +1360,106 @@ h3 {
   margin: 0.5em 0;
 }
 
-.dialog-actions {
-  text-align: center;
-  margin-top: 1.5rem;
+.dialog-title {
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
 }
-
+.dialog-content {
+  font-size: 1em;
+  color: #334155;
+  margin-bottom: 1.5em;
+}
+.dialog-actions {
+  text-align: right;
+}
+.dialog-close,
 .btn-close {
   background-color: #ef4444;
   color: white;
-  padding: 0.4em 1em;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.below-action {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.mode-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.mode-toggle button {
-  background-color: #e0f2fe;
-  border: 1px solid #60a5fa;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.mode-toggle button.active {
-  background-color: #3b82f6;
-  color: white;
-  border-color: #2563eb;
-}
-
-.demo-footer-description {
-  text-align: center;
-  color: #64748b;
-  font-size: 0.95rem;
-  margin-top: 2rem;
-  font-style: italic;
-}
-.demo-controls {
-  text-align: center;
-  margin-top: 2rem;
-}
-.btn-reset {
-  background: #3b82f6;
-  color: white;
-  font-weight: 600;
   padding: 0.5em 1.2em;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin-top: 0.5em;
 }
-.btn-reset:hover {
-  background: #2563eb;
+.btn-close:hover {
+  background-color: #dc2626;
 }
 
-
-
-.tag-icon-wrapper {
-  position: relative;
+/* User Card List */
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.user-card {
+  display: flex;
+  gap: 1.2em;
+  padding: 1.2em;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75em;
+  margin-bottom: 1em;
+  background-color: #f9fafb;
+  flex-direction: row;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2px solid #6366f1;
+}
+.info h4 {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #374151;
+}
+.info p {
+  margin: 0.2em 0;
+  font-size: 0.95em;
+}
+.role {
+  font-size: 0.9em;
+  color: #6b7280;
+}
+.tag {
   display: inline-block;
-  cursor: pointer;
-  color: #4f46e5;
-  padding: 0.5em 0.6em;
-  background-color: #e0e0e5;
-  border-radius: 500em;
+  background: #e0e7ff;
+  color: #4338ca;
+  padding: 0.2em 0.6em;
+  border-radius: 6px;
+  font-size: 0.75em;
+  margin: 0.2em 0.3em 0 0;
 }
 
-.tag-icon {
-  transition: color 0.3s ease;
-}
-.tag-icon-wrapper:hover .tag-icon {
-  color: #6366f1;
-}
-
+/* Tag Dialog */
 .tag-dialog {
   position: absolute;
   top: 90%;
   right: 0;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+  border-radius: 0.5em;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  padding: 0.75rem 1rem;
+  padding: 0.75em 1em;
   z-index: 100;
   width: 200px;
-}
 
-.tag-dialog-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
-
 .tag-dialog-list .tag {
   display: block;
-  padding: 0.3rem 0;
-  font-size: 0.9rem;
+  padding: 0.3em 0;
+  font-size: 0.9em;
   color: #374151;
   border-bottom: 1px solid #f3f4f6;
-}
 
+}
 .tag-dialog-list .tag:last-child {
   border-bottom: none;
 }
-
 .caret-up {
   position: absolute;
   top: -8px;
@@ -1346,149 +1471,213 @@ h3 {
   border-bottom: 8px solid #ffffff;
 }
 
-
-.expand-button {
-  background-color: #4f46e5;
-  color: white;
-  padding: 0.4em 1em;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.expand-dialog {
-  position: fixed;
-  top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%); /* center horizontally and vertically */
-  background: white;
-  border: 2px solid #d1d5db;
-  border-radius: 10px;
-  padding: 1.5rem;
-  width: 400px;
-  max-width: 90%;
-  margin: 2rem auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.dialog-title {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.dialog-content {
-  font-size: 1rem;
-  color: #334155;
-  margin-bottom: 1.5rem;
-}
-
-.dialog-actions {
-  text-align: right;
-}
-
-.dialog-close {
-  background-color: #ef4444;
-  color: white;
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-
-.demo-wrapper {
-  background: linear-gradient(135deg, #f0fdf4, #ffffff);
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
-  max-width: 1100px;
-  margin: 3rem auto;
-  transition: all 0.3s ease;
-}
-.online-dot,
-.offline-dot {
-  display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-.online-dot::before {
-  content: '●';
-  color: #10b981;
-  margin-right: 0.4em;
-}
-.offline-dot::before {
-  content: '●';
-  color: #ef4444;
-  margin-right: 0.4em;
-}
-.progress-bar {
-  background: #e2e8f0;
-  border-radius: 1rem;
-  overflow: hidden;
-  height: 1rem;
-  margin-top: 0.25rem;
-  width: 10em;
-}
-.progress-fill {
-  background: #3b82f6;
-  color: white;
-  text-align: center;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  height: 100%;
-}
-.user-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.section-heading {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 9999px;
-  object-fit: cover;
-}
-
-
-.demo-title {
-  font-size: 1.9rem;
-  font-weight: 800;
-  background: linear-gradient(to right, #14b8a6, #6366f1, #f43f5e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.demo-description,
+/* Footer */
 .demo-footer-description {
-  font-size: 1.05rem;
-  color: #475569;
-  max-width: 740px;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 1.6;
-  margin-top: 1rem;
-}
-.expand-notes {
+  font-size: 0.95em;
+  color: #64748b;
   font-style: italic;
-  color: #475569;
-  background-color: #8ccae7;
-  padding: 0.3em;
-  border-radius: 10px;
+  margin-top: 2em;
+  text-align: center;
 }
 
+/* 🔁 Responsive */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1em 0.5em;
+  }
+  .demo-title {
+    font-size: 1.2em;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.8em;
+  }
+  .bp-button,
+  .btn-reset,
+  .btn-show-selected,
+  .mode-toggle button {
+    font-size: 0.8em;
+    padding: 0.4em 0.8em;
+  }
+  .user-avatar,
+  .avatar {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .progress-bar {
+    width: 6em;
+  }
+  .tag {
+    font-size: 0.7em;
+    padding: 0.15em 0.5em;
+  }
+  .expand-button {
+    font-size: 0.75em;
+    padding: 0.3em 0.8em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.9rem;
+  }
 
-.table-placeholder {
-  border: 2px dashed #cbd5e1;
-  border-radius: 1rem;
-  background-color: #f8fafc;
-  padding: 1em;
-  position: relative;
+
+}
+
+@media (min-width: 401px) and (max-width: 480px) {
+  .demo-wrapper {
+    padding: 1.25em 0.75em;
+  }
+  .demo-title {
+    font-size: 1.4em;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.9em;
+  }
+  .progress-bar {
+    width: 8em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.8em;
+
+  }
+}
+@media (min-width: 481px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25em 0.75em;
+  }
+  .demo-title {
+    font-size: 1.4em;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.9em;
+  }
+  .progress-bar {
+    width: 8em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.7em;
+  }
+}
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5em 1em;
+  }
+  .demo-title {
+    font-size: 1.6em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.7em;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2em 1.5em;
+  }
+  .demo-title {
+    font-size: 1.7em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.7em;
+  }
+}
+@media (min-width: 1024px) {
+  .demo-wrapper {
+    padding: 2.5em 2em;
+  }
+  .demo-title {
+    font-size: 1.9em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.7rem;
+  }
+}
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3em 2em;
+  }
+  .demo-title {
+    font-size: 2.5em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.8rem;
+  }
+}
+
+/* 🌙 Dark Mode */
+.dark-mode .demo-wrapper {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+}
+.dark-mode .demo-description,
+.dark-mode .demo-footer-description {
+  color: #cbd5e1;
+}
+.dark-mode .table-placeholder {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+.dark-mode .status-badge {
+  background-color: #374151;
+  color: #f9fafb;
+}
+.dark-mode .status-badge.active {
+  background-color: #059669;
+}
+.dark-mode .status-badge.pending {
+  background-color: #ca8a04;
+}
+.dark-mode .status-badge.on-leave {
+  background-color: #dc2626;
+}
+.dark-mode .progress-bar {
+  background: #334155;
+}
+.dark-mode .progress-fill {
+  background: #6366f1;
+}
+.dark-mode .info h4 {
+  color: rgba(12, 229, 236, 0.44);
+}
+.dark-mode .dialog-content {
+  color: #f9fafb;
+}
+.dark-mode .selected-dialog,
+.dark-mode .expand-dialog,
+.dark-mode .tag-dialog {
+  background-color: #1e293b;
+  color: #f9fafb;
+  border-color: #475569;
+}
+.dark-mode .user-card{
+  background-color: #1e293b;
+  color: #f9fafb;
+  border-color: #475569;
+}
+.dark-mode .caret-up {
+  border-bottom-color: #1e293b;
+}
+.dark-mode .btn-reset,
+.dark-mode .btn-show-selected {
+  background-color: #2563eb;
+  color: #f9fafb;
+}
+.dark-mode .btn-reset:hover {
+  background-color: #1d4ed8;
+}
+.dark-mode .btn-show-selected:disabled {
+  background-color: #475569;
+}
+.dark-mode .expand-button {
+  background-color: #6366f1;
+}
+.dark-mode .bp-button.active {
+  background-color: rgba(149, 14, 239, 0.5);
+  color: white;
+  border-color: #2563eb;
+}
+.dark-mode .tag {
+  background: #4f46e5;
+  color: #f9fafb;
 }
 </style>
+

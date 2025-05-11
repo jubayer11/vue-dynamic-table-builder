@@ -75,6 +75,34 @@
 </template>
 
 <script setup>
+/**
+ * @component CustomSlotColumnDemo
+ * @description
+ * This demo showcases a fully customizable dynamic table using Vue 3's `<script setup>` and named slots.
+ * Each column (including expandable rows) is defined via configuration and rendered using slot templates.
+ *
+ * Key Features:
+ * - Named slots for custom rendering: #specific-column and #expandable-specific-column.
+ * - Full control over structure, logic, and styling per column.
+ * - Responsive design and dark mode support.
+ *
+ * TableConfig:
+ * - Defines headers, row data, total columns, and id index.
+ * - `updateSpecificColumnIndexPropertyArray` enables specific slot rendering by column index.
+ *
+ * TableStyleConfig:
+ * - Reserved for applying per-cell or row styles (currently unused, but reactive and available).
+ *
+ * ResponsiveColumnConfig:
+ * - Initial visible column count is set to 3 but can be extended via config.
+ *
+ * Data Format:
+ * - Each row includes nested and flat values: [ [name, avatar], role, status, performance, notes, isOnline, tags, id ]
+ *
+ * Intended Use:
+ * - Ideal for demos, admin dashboards, and systems that require visual flexibility in table cells.
+ */
+
 import { computed, reactive, ref } from 'vue';
 import DynamicTable from '@/components/index.vue';
 import { TableConfig, TableStyleConfig, ResponsiveColumnConfig } from '@';
@@ -156,6 +184,10 @@ const tableCustomStyle = computed(() => customStyle);
 </script>
 
 <style scoped>
+/* --------------------------------------------------
+   Custom Slot Column Demo – Responsive + Themed
+-------------------------------------------------- */
+
 .demo-wrapper {
   background: linear-gradient(135deg, #f8fafc, #ffffff);
   padding: 3rem 2rem;
@@ -163,13 +195,16 @@ const tableCustomStyle = computed(() => customStyle);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03);
   max-width: 1000px;
   margin: 3rem auto;
+  transition: all 0.3s ease;
 }
 
 .section-heading {
   text-align: center;
   margin-bottom: 2rem;
   animation: fadeInDown 0.5s ease;
+  padding: 0 1rem;
 }
+
 .demo-title {
   font-size: 1.8rem;
   font-weight: 800;
@@ -177,7 +212,9 @@ const tableCustomStyle = computed(() => customStyle);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
+  word-break: break-word;
 }
+
 .demo-description,
 .demo-footer-description {
   font-size: 1.05rem;
@@ -185,16 +222,17 @@ const tableCustomStyle = computed(() => customStyle);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: break-word;
   text-align: center;
 }
 
 .table-placeholder {
-  min-height: 150px;
   border: 2px dashed #cbd5e1;
   border-radius: 1rem;
   background-color: #f8fafc;
   padding: 1em;
   margin-bottom: 2rem;
+  overflow-x: auto;
 }
 
 /* Specific Column Styling */
@@ -238,29 +276,22 @@ const tableCustomStyle = computed(() => customStyle);
   color: #b91c1c;
 }
 
-/* Expandable Column Styling */
+/* Expandable Columns */
 .expand-item {
   padding: 0.75rem 0;
   border-top: 1px solid #e2e8f0;
-}
-.expand-item label {
-  font-weight: 600;
-  color: #334155;
-  display: block;
-  margin-bottom: 0.25rem;
 }
 .expand-notes {
   font-style: italic;
   color: #475569;
 }
-
 .progress-bar {
   background: #e2e8f0;
   border-radius: 1rem;
   overflow: hidden;
   height: 1rem;
-  margin-top: 0.25rem;
   width: 10em;
+  margin-top: 0.25rem;
 }
 .progress-fill {
   background: #3b82f6;
@@ -300,4 +331,133 @@ const tableCustomStyle = computed(() => customStyle);
   font-size: 0.75rem;
   border-radius: 0.5em;
 }
+
+/* 🌙 Dark Mode */
+.dark-mode .demo-wrapper {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+}
+.dark-mode .demo-description,
+.dark-mode .demo-footer-description {
+  color: #94a3b8;
+}
+.dark-mode .table-placeholder {
+  background-color: #1f2937;
+  border-color: #334155;
+}
+.dark-mode .user-name {
+  color: #f9fafb;
+}
+.dark-mode .user-role {
+  color: #cbd5e1;
+}
+.dark-mode .expand-notes {
+  color: #94a3b8;
+}
+.dark-mode .expand-item {
+  border-color: #334155;
+}
+.dark-mode .progress-bar {
+  background: #334155;
+}
+.dark-mode .tag {
+  background-color: #1e40af;
+  color: #e0f2fe;
+}
+
+/* 🔁 Responsive Breakpoints */
+@media (max-width: 400px) {
+  .demo-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .demo-title {
+    font-size: 1rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.75rem;
+  }
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+  .user-name,
+  .user-role {
+    font-size: 0.75rem;
+  }
+  .status-badge {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 639px) {
+  .demo-wrapper {
+    padding: 1.25rem 0.75rem;
+  }
+  .demo-title {
+    font-size: 1.25rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.85rem;
+  }
+  .user-name,
+  .user-role {
+    font-size: 0.8rem;
+  }
+  .status-badge {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .demo-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  .demo-title {
+    font-size: 1.5rem;
+  }
+  .demo-description,
+  .demo-footer-description {
+    font-size: 0.95rem;
+  }
+  .user-name,
+  .user-role {
+    font-size: 1rem;
+  }
+  .status-badge {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .demo-wrapper {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .demo-wrapper {
+    padding: 3rem 2rem;
+  }
+}
+
+/* ✨ Animation */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>

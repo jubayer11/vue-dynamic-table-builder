@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@demo/pages/index.vue'
-import View from "@demo/pages/view.vue";
+import View from "@demo/pages/RichStatusView.vue";
 import AllFeatureActionView from "@demo/pages/AllFeatureActionView.vue";
 
 
