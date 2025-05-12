@@ -3,7 +3,7 @@
 ![Vue 3 Compatible](https://img.shields.io/badge/Vue%203-Compatible-%23349b43)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)  
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)  
-[![Live Demo](https://img.shields.io/badge/Demo-Open%20Now-blue)](https://jubayer11.github.io/vue-dynamic-table-builder/docs)  
+[![Live Demo](https://img.shields.io/badge/Demo-Open%20Now-blue)](https://jubayer11.github.io/vue-dynamic-table-builder/)  
 [![GitHub](https://img.shields.io/github/stars/jubayer11/vue-dynamic-table-builder?style=social)](https://github.com/jubayer11/vue-dynamic-table-builder)  
 [![npm](https://img.shields.io/npm/v/@jubayer11/vue-dynamic-table-builder)](https://www.npmjs.com/package/@jubayer11/vue-dynamic-table-builder)  
 [![Related Package](https://img.shields.io/badge/Also%20Check-Vue%20Dynamic%20Form%20Builder-orange)](https://www.npmjs.com/package/@jubayer11/vue-dynamic-form-builder)
@@ -165,7 +165,7 @@ Each demo is available inside the `demo/` folder.
 | **Slot Column Demo** | Full slot control over cell content |
 | **All Features Combined** | Real-world admin panel with everything enabled |
 
-🔗 **Live Demo**: [https://your-demo-link.com](https://your-demo-link.com)
+🔗 **Live Demo**: [https://jubayer11.github.io/vue-dynamic-table-builder/](https://jubayer11.github.io/vue-dynamic-table-builder/)
 
 ---
 
@@ -229,4 +229,5 @@ A schema-based Vue 3 form builder with field config, validation, layout control,
 
 If you find this project useful, consider starring ⭐ the repository — it helps others discover it too!
 
-🤝 Contributions welcome — submit issues or PRs if you'd like to help improve it!
+🤝 Interested in contributing?  
+Feel free to open issues, suggest improvements, or submit pull requests — collaboration is always welcome!

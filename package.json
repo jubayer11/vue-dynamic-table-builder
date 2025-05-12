@@ -1,13 +1,47 @@
 {
-  "name": "vue-dynamic-table",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@jubayer11/vue-dynamic-table-builder",
+  "version": "1.0.1",
+  "main": "dist/vue-dynamic-table-builder.umd.js",
+  "module": "dist/vue-dynamic-table-builder.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-dynamic-table-builder.es.js",
+      "require": "./dist/vue-dynamic-table-builder.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
+  "license": "MIT",
+  "author": "Jubayer Ahmed <ahmedjubayer54@gmail.com>",
+  "description": "Vue 3 dynamic table builder with expandable rows, action columns, rich styling, and slot-based customization — ideal for dashboards, admin panels, and complex data UIs.",
+  "keywords": [
+    "vue3",
+    "table-builder",
+    "dynamic-table",
+    "expandable-rows",
+    "slot-based-table",
+    "custom-table",
+    "vue-table-component",
+    "vue-admin-table",
+    "table-pagination",
+    "action-column"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jubayer11/vue-dynamic-table-builder.git"
+  },
+  "homepage": "https://jubayer11.github.io/vue-dynamic-table-builder/",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "docs:build": "vite build --config vite.config.docs.js",
+    "lib:build": "vite build --config vite.config.lib.js",
     "docs:deploy": "gh-pages -d dist"
   },
   "dependencies": {
