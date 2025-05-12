@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:build": "vite build --config vite.config.docs.js",
+    "docs:deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.5.13",
@@ -14,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.2",
+    "gh-pages": "^6.3.0",
     "sass-embedded": "^1.87.0",
     "vite": "^6.3.1"
   }
