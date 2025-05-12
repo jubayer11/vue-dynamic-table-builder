@@ -14,7 +14,7 @@
       <span class="separator">|</span>
       <a href="https://www.jubayerahmed.com" target="_blank" rel="noopener">Portfolio ↗</a>
       <span class="separator">|</span>
-      <a href="https://github.com/jubayer11/vue-dynamic-table-builder#readme" target="_blank" rel="noopener">Docs ↗</a>
+      <a href="https://www.npmjs.com/package/@jubayer11/vue-dynamic-table-builder?activeTab=readme" target="_blank" rel="noopener">NPM ↗</a>
     </div>
 
     <div class="footer-promo">
