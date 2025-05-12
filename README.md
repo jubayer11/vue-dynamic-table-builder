@@ -76,7 +76,7 @@ import '@jubayer11/vue-dynamic-table-builder/dist/style.css';
 
 ```js
 import DynamicTable from '@jubayer11/vue-dynamic-table-builder';
-import { TableConfig, TableStyleConfig } from '@jubayer11/vue-dynamic-table-builder';
+import { TableConfig, TableStyleConfig, ResponsiveColumnConfig } from '@jubayer11/vue-dynamic-table-builder';
 ```
 
 Use `<DynamicTable />` in your template and configure it with `TableConfig` and `TableStyleConfig` as needed.
@@ -123,8 +123,8 @@ const dataShow = new ResponsiveColumnConfig(2);
 
 config.updateHeaders(['Name', 'Email']);
 config.updateData([
-  'Alice', 'alice@example.com',
-  'Bob', 'bob@example.com',
+  ['Alice', 'alice@example.com'],
+  ['Bob', 'bob@example.com'],
 ]);
 config.updateTotalColumn(2);
 config.updateDataShow(dataShow);

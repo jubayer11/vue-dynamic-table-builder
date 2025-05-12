@@ -89,6 +89,7 @@ const sections = [
       { id: 'overview', label: 'Overview' },
       { id: 'headers', label: 'Headers & Data' },
       { id: 'total-columns', label: 'Total Columns' },
+      { id: 'column-types', label: 'Column Types' },
       { id: 'responsive-columns', label: 'ResponsiveColumnConfig' },
       { id: 'serial-checkbox', label: 'Serial & Checkbox Columns' },
       { id: 'actions', label: 'Action Config (Icons & Buttons)' },
@@ -119,11 +120,13 @@ const sections = [
     title: 'Action System',
     component: 'Actions',
     subSections: [
+      { id: 'overview', label: 'Overview' },
       { id: 'icon-vs-button', label: 'Icon vs Button' },
       { id: 'popup-vs-route', label: 'Popup vs Route' },
       { id: 'activity-types', label: 'ActionActivityType' },
       { id: 'custom-icons', label: 'Using Custom Icons' },
-      { id: 'dialogs', label: 'Action Dialogs & Modals' }
+      { id: 'smart-logic', label: 'Advanced Use (Smart Logic)' },
+      { id: 'dialogs', label: 'Dialogs & External Handling' }
     ]
   },
   {
@@ -136,6 +139,7 @@ const sections = [
       { id: 'styling', label: 'Styling Expanded Rows' }
     ]
   },
+
   {
     title: 'Slots',
     component: 'Slots',
@@ -152,7 +156,8 @@ const sections = [
     subSections: [
       { id: 'breakpoints', label: 'Breakpoint Classes' },
       { id: 'hiding-columns', label: 'Hiding Columns per Width' },
-      { id: 'responsive-config', label: 'Using ResponsiveColumnConfig' }
+      { id: 'responsive-config', label: 'Using ResponsiveColumnConfig' },
+      { id: 'skip-columns', label: 'Skipping Columns Manually' } // ✅ Added
     ]
   },
   {
@@ -167,20 +172,10 @@ const sections = [
   },
   {
     title: 'Demo Showcase',
-    component: 'DemoShowcase',
-    subSections: [
-      { id: 'basic', label: 'Basic Table' },
-      { id: 'multi-action', label: 'Multiple Action Column' },
-      { id: 'buttons', label: 'Buttons as Actions' },
-      { id: 'status', label: 'Rich Status Styling' },
-      { id: 'selectable', label: 'Selectable + Per Page' },
-      { id: 'expandable', label: 'Expandable Row Table' },
-      { id: 'pagination', label: 'Pagination Modes' },
-      { id: 'crazy-style', label: 'Crazy Style Example' },
-      { id: 'slot-demo', label: 'Slot-Based Table' },
-      { id: 'all-combined', label: 'All Features Combined' }
-    ]
+    component: 'DemoIndex', // Or whatever maps to this demo/index.vue
+    subSections: [] // no scroll subsections needed since it's handled inside
   },
+
   {
     title: 'API Reference',
     component: 'ApiReference',

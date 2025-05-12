@@ -11,11 +11,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref, shallowRef} from 'vue'
 import Sidebar from '@demo/components/docs/Sidebar.vue'
 
 import Introduction from '@demo/components/docs/Introduction.vue'
 import GettingStarted from '@demo/components/docs/GettingStarted.vue'
+import TableConfig from "@demo/components/docs/TableConfig.vue"
+import Pagination from "@demo/components/docs/Pagination.vue";
+import TableStyleConfig from "@demo/components/docs/TableStyleConfig.vue";
+import Actions from "@demo/components/docs/Actions.vue";
+import ExpandableRows from "@demo/components/docs/ExpandableRows.vue";
+import Slots from "@demo/components/docs/Slots.vue";
+import ResponsiveLayout from "@demo/components/docs/ResponsiveLayout.vue";
+import Styling from "@demo/components/docs/Styling.vue";
+import DemoIndex from "@demo/views/demo/pages/index.vue"
+import ApiReference from "@demo/components/docs/ApiReference.vue";
+import Contribution from "@demo/components/docs/Contribution.vue";
 // 🔁 Add more as you build
 
 
@@ -23,9 +34,21 @@ import GettingStarted from '@demo/components/docs/GettingStarted.vue'
 const components = {
   Introduction,
   GettingStarted,
+  TableConfig,
+  Pagination,
+  TableStyleConfig,
+  Actions,
+  ExpandableRows,
+  Slots,
+  ResponsiveLayout,
+  Styling,
+  DemoIndex,
+  ApiReference,
+  Contribution
+
   // Add more as you go
 }
-const activeComponent = ref(components.Introduction)
+const activeComponent = shallowRef(components.Introduction)
 function setActive(name) {
   if (components[name]) {
     activeComponent.value = components[name]
