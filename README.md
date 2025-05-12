@@ -3,7 +3,8 @@
 ![Vue 3 Compatible](https://img.shields.io/badge/Vue%203-Compatible-%23349b43)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)  
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)  
-[![Live Demo](https://img.shields.io/badge/Demo-Live%20Soon-blue)](https://your-demo-link.com)  
+[![Live Demo](https://img.shields.io/badge/Demo-Open%20Now-blue)](https://jubayer11.github.io/vue-dynamic-table-builder/docs)  
+[![GitHub](https://img.shields.io/github/stars/jubayer11/vue-dynamic-table-builder?style=social)](https://github.com/jubayer11/vue-dynamic-table-builder)  
 [![npm](https://img.shields.io/npm/v/@jubayer11/vue-dynamic-table-builder)](https://www.npmjs.com/package/@jubayer11/vue-dynamic-table-builder)  
 [![Related Package](https://img.shields.io/badge/Also%20Check-Vue%20Dynamic%20Form%20Builder-orange)](https://www.npmjs.com/package/@jubayer11/vue-dynamic-form-builder)
 
