@@ -65,7 +65,7 @@
 
 
 
-import { defineProps } from 'vue';
+
 
 const props = defineProps({
   fetchData: {

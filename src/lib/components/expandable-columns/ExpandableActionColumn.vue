@@ -204,7 +204,7 @@
  */
 
 
-import {defineProps, onMounted} from 'vue';
+import { onMounted} from 'vue';
 import { actionActivityType } from "@/utils/customizableTable";
 
 

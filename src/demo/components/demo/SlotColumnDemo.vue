@@ -10,61 +10,64 @@
 
     <!-- Table Placeholder -->
     <div class="table-placeholder">
-      <DynamicTable
-          :myTable="myTable"
-          :customStyle="tableCustomStyle"
-          style="width: 100%"
-      >
-        <!-- Inline Column Rendering -->
-        <template #specific-column="{ item, colIndex, id }">
-          <template v-if="colIndex === 0">
-            <div class="user-cell">
-              <img :src="item[1]" alt="avatar" class="user-avatar" />
-              <span class="user-name">{{ item[0] }}</span>
-            </div>
-          </template>
+      <div class="dynamic-table-wrapper">
+        <DynamicTable
+            :myTable="myTable"
+            :customStyle="tableCustomStyle"
+            style="width: 100%"
+        >
+          <!-- Inline Column Rendering -->
+          <template #specific-column="{ item, colIndex, id }">
+            <template v-if="colIndex === 0">
+              <div class="user-cell">
+                <img :src="item[1]" alt="avatar" class="user-avatar" />
+                <span class="user-name">{{ item[0] }}</span>
+              </div>
+            </template>
 
-          <template v-else-if="colIndex === 1">
-            <span class="user-role">{{ item }}</span>
-          </template>
+            <template v-else-if="colIndex === 1">
+              <span class="user-role">{{ item }}</span>
+            </template>
 
-          <template v-else-if="colIndex === 2">
+            <template v-else-if="colIndex === 2">
             <span :class="['status-badge', item]">
               {{ item }}
             </span>
+            </template>
           </template>
-        </template>
 
-        <!-- Expandable Column Rendering -->
-        <template #expandable-specific-column="{ item, colIndex, id }">
-          <div class="expand-item">
-            <template v-if="colIndex === 3">
+          <!-- Expandable Column Rendering -->
+          <template #expandable-specific-column="{ item, colIndex, id }">
+            <div class="expand-item">
+              <template v-if="colIndex === 3">
 
-              <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: item + '%' }">{{ item }}</div>
-              </div>
-            </template>
+                <div class="progress-bar">
+                  <div class="progress-fill" :style="{ width: item + '%' }">{{ item }}</div>
+                </div>
+              </template>
 
-            <template v-else-if="colIndex === 4">
+              <template v-else-if="colIndex === 4">
 
-              <p class="expand-notes">{{ item }}</p>
-            </template>
+                <p class="expand-notes">{{ item }}</p>
+              </template>
 
-            <template v-else-if="colIndex === 5">
+              <template v-else-if="colIndex === 5">
               <span :class="item ? 'online-dot' : 'offline-dot'">
                 {{ item ? 'Online' : 'Offline' }}
               </span>
-            </template>
+              </template>
 
-            <template v-else-if="colIndex === 6">
+              <template v-else-if="colIndex === 6">
 
-              <div class="tag-list">
-                <span class="tag" v-for="(tag, i) in item" :key="i">{{ tag }}</span>
-              </div>
-            </template>
-          </div>
-        </template>
-      </DynamicTable>
+                <div class="tag-list">
+                  <span class="tag" v-for="(tag, i) in item" :key="i">{{ tag }}</span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </DynamicTable>
+      </div>
+
     </div>
 
     <!-- Description -->
@@ -239,7 +242,7 @@ const tableCustomStyle = computed(() => customStyle);
 .user-cell {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.5em;
 }
 .user-avatar {
   width: 32px;
@@ -252,14 +255,14 @@ const tableCustomStyle = computed(() => customStyle);
   color: #1e293b;
 }
 .user-role {
-  font-size: 0.95rem;
+  font-size: 0.95em;
   font-weight: 500;
   color: #475569;
 }
 .status-badge {
   padding: 0.2em 0.6em;
-  font-size: 0.8rem;
-  border-radius: 0.5rem;
+  font-size: 0.8em;
+  border-radius: 0.5em;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -278,7 +281,7 @@ const tableCustomStyle = computed(() => customStyle);
 
 /* Expandable Columns */
 .expand-item {
-  padding: 0.75rem 0;
+  padding: 0.75em 0;
   border-top: 1px solid #e2e8f0;
 }
 .expand-notes {
@@ -287,25 +290,25 @@ const tableCustomStyle = computed(() => customStyle);
 }
 .progress-bar {
   background: #e2e8f0;
-  border-radius: 1rem;
+  border-radius: 1em;
   overflow: hidden;
-  height: 1rem;
+  height: 1em;
   width: 10em;
-  margin-top: 0.25rem;
+  margin-top: 0.25em;
 }
 .progress-fill {
   background: #3b82f6;
   color: white;
   text-align: center;
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: 0.75em;
+  line-height: 1em;
   height: 100%;
 }
 
 .online-dot,
 .offline-dot {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.85em;
   font-weight: 600;
 }
 .online-dot::before {
@@ -328,7 +331,7 @@ const tableCustomStyle = computed(() => customStyle);
   background-color: #e0f2fe;
   color: #0369a1;
   padding: 0.25em 0.6em;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   border-radius: 0.5em;
 }
 
@@ -388,6 +391,11 @@ const tableCustomStyle = computed(() => customStyle);
   .status-badge {
     font-size: 0.7rem;
   }
+
+  .dynamic-table-wrapper {
+    font-size: 0.9rem;
+  }
+
 }
 
 @media (min-width: 401px) and (max-width: 639px) {
@@ -403,10 +411,14 @@ const tableCustomStyle = computed(() => customStyle);
   }
   .user-name,
   .user-role {
-    font-size: 0.8rem;
+    font-size: 0.8em;
   }
   .status-badge {
-    font-size: 0.75rem;
+    font-size: 0.75em;
+  }
+  .dynamic-table-wrapper {
+    font-size: 0.8em;
+
   }
 }
 
@@ -423,10 +435,10 @@ const tableCustomStyle = computed(() => customStyle);
   }
   .user-name,
   .user-role {
-    font-size: 1rem;
+    font-size: 1em;
   }
   .status-badge {
-    font-size: 0.8rem;
+    font-size: 0.8em;
   }
 }
 

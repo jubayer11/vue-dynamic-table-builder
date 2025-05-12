@@ -108,7 +108,7 @@ import {
   ButtonActionActivityType,
   IconInlineActivityType
 } from '@/utils/ActionActivityType.js';
-import ActionDialog from "@demo/components/dialog/ActionDialog.vue";
+import ActionDialog from "@demo/components/demo/dialog/ActionDialog.vue";
 
 
 // Dialog State

@@ -1,5 +1,5 @@
 <template>
-  <footer class="demo-footer">
+  <footer class="global-footer">
     <div class="footer-meta">
       <h4 class="footer-author">
         Jubayer Ahmed <span class="dot">•</span> Dynamic Systems, Clean Code
@@ -9,7 +9,6 @@
       </p>
     </div>
 
-    <!-- 🔗 Project Links -->
     <div class="footer-links">
       <a href="https://github.com/jubayer11/vue-dynamic-table-builder" target="_blank" rel="noopener">GitHub ↗</a>
       <span class="separator">|</span>
@@ -18,7 +17,6 @@
       <a href="https://github.com/jubayer11/vue-dynamic-table-builder#readme" target="_blank" rel="noopener">Docs ↗</a>
     </div>
 
-    <!-- 📣 Additional Package Promo -->
     <div class="footer-promo">
       🚀 Also explore my
       <a href="https://github.com/jubayer11/vue-dynamic-form-builder" target="_blank" rel="noopener">
@@ -27,7 +25,6 @@
       — Build smart, fully customizable forms with validation, slots, and design flexibility.
     </div>
 
-    <!-- 📅 Copyright -->
     <div class="footer-note">
       <span>© 2025 All Rights Reserved</span>
     </div>
@@ -36,14 +33,13 @@
 
 <script setup>
 /**
- * @component DemoFooter
- * A responsive, theme-aware footer for the demo page.
- * Includes author info, version, project links, and a promo for another Vue package.
+ * @component GlobalFooter
+ * Shared footer for both /docs and /demo routes.
  */
 </script>
 
 <style scoped>
-.demo-footer {
+.global-footer {
   margin-top: 5rem;
   padding: 2.5rem 1.5rem;
   text-align: center;
@@ -51,6 +47,7 @@
   background: #f9fafb;
   font-size: 0.95rem;
   color: #4b5563;
+  width: 100%;
 }
 
 .footer-meta {
@@ -120,7 +117,7 @@
 }
 
 /* 🌙 Dark Mode Support */
-.dark-mode .demo-footer {
+.dark-mode .global-footer {
   background: #111827;
   border-top-color: #1f2937;
   color: #9ca3af;

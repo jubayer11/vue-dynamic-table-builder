@@ -230,7 +230,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import DynamicTable from '@/components/index.vue';
 import IconList from '@/components/Icon/iconList.vue';
-import AllFeatureActionDialog from '@demo/components/dialog/AllFeatureActionDialog.vue';
+import AllFeatureActionDialog from '@demo/components/demo/dialog/AllFeatureActionDialog.vue';
 
 import {
   TableConfig,

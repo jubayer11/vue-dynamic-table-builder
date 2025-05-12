@@ -211,7 +211,7 @@
  */
 
 
-import {defineProps} from 'vue';
+
 
 import {actionActivityType} from "@/utils/customizableTable";
 

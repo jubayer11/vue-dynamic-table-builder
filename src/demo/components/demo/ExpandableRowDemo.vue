@@ -14,8 +14,12 @@
       <button
           v-for="(bp, key) in columnDisplayOptions"
           :key="key"
-          @click="updateColumnsByBreakpoint(bp.columns)"
-          class="bp-button"
+          @click="() => {
+    updateColumnsByBreakpoint(bp.columns);
+    selectedBreakpoint = key;
+  }"
+          :class="['bp-button', { active: selectedBreakpoint === key }]"
+
       >
         {{ bp.label }} ({{ bp.columns }} cols)
       </button>
@@ -147,6 +151,7 @@ const arrayOfTableData = computed(() => {
   });
 });
 
+const selectedBreakpoint = ref('md');
 const updateColumnsByBreakpoint = (value) => {
   const dataShow = new ResponsiveColumnConfig(value);
   customTable.updateDataShow(dataShow);
@@ -229,7 +234,11 @@ const tableCustomStyle = computed(() => customStyle);
 .bp-button:hover {
   background-color: #c7d2fe;
 }
-
+.bp-button.active {
+  background-color: rgba(149, 14, 239);
+  color: white;
+  border-color: #2563eb;
+}
 .table-placeholder {
   padding: 1em;
   border: 2px dashed #cbd5e1;
@@ -309,6 +318,11 @@ const tableCustomStyle = computed(() => customStyle);
 .dark-mode .expand-content {
   background-color: #111827;
   color: #e5e7eb;
+}
+.dark-mode .bp-button.active {
+  background-color: rgba(149, 14, 239, 0.5);
+  color: white;
+  border-color: #2563eb;
 }
 
 /* 📱 Responsive Font Scaling */

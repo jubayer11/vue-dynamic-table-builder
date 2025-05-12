@@ -57,8 +57,6 @@
       </div>
     </div>
 
-    <!-- 📣 Footer (contains form builder promo) -->
-    <DemoFooter />
   </div>
 </template>
 
@@ -84,17 +82,16 @@ watch(isDark, (val) => {
 })
 
 // 🌐 Demo Components
-import BasicTableDemo from '@demo/components/BasicTableDemo.vue'
-import MultipleActionTableDemo from '@demo/components/MultipleActionTableDemo.vue'
-import CrazyStyleTableDemo from '@demo/components/CrazyStyleTableDemo.vue'
-import ExpandableRowDemo from '@demo/components/ExpandableRowDemo.vue'
-import PaginationModesDemo from '@demo/components/PaginationModesDemo.vue'
-import AllFeaturesCombinedDemo from '@demo/components/AllFeaturesCombinedDemo.vue'
-import DemoFooter from '@demo/components/DemoFooter.vue'
-import ActionButtonTableDemo from '@demo/components/ActionButtonTableDemo.vue'
-import SelectablePerPageTableDemo from '@demo/components/SelectablePerPageTableDemo.vue'
-import RichStatusActionButtonsDemo from '@demo/components/RichStatusActionButtonsDemo.vue'
-import SlotColumnDemo from '@demo/components/SlotColumnDemo.vue'
+import BasicTableDemo from '@demo/components/demo/BasicTableDemo.vue'
+import MultipleActionTableDemo from '@demo/components/demo/MultipleActionTableDemo.vue'
+import CrazyStyleTableDemo from '@demo/components/demo/CrazyStyleTableDemo.vue'
+import ExpandableRowDemo from '@demo/components/demo/ExpandableRowDemo.vue'
+import PaginationModesDemo from '@demo/components/demo/PaginationModesDemo.vue'
+import AllFeaturesCombinedDemo from '@demo/components/demo/AllFeaturesCombinedDemo.vue'
+import ActionButtonTableDemo from '@demo/components/demo/ActionButtonTableDemo.vue'
+import SelectablePerPageTableDemo from '@demo/components/demo/SelectablePerPageTableDemo.vue'
+import RichStatusActionButtonsDemo from '@demo/components/demo/RichStatusActionButtonsDemo.vue'
+import SlotColumnDemo from '@demo/components/demo/SlotColumnDemo.vue'
 
 /**
  * @typedef DemoSection

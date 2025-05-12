@@ -47,7 +47,7 @@
  * />
  */
 
-import { defineProps } from 'vue';
+
 
 const props = defineProps({
   styles: {
